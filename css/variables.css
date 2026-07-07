@@ -1,0 +1,17 @@
+:root {
+  --color-bg:      #FFFDF7;
+  --color-text:    #1A1A1A;
+  --color-accent:  #8B0000;
+  --color-rule:    #C4B49A;
+  --color-sidebar: #F5F0E8;
+  --color-overlay: #1C1C1C;
+  --color-muted:   #6B6860;
+
+  --font-headline: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:     'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-ui:       'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --sidebar-width: 220px;
+  --max-width:     1100px;
+  --gutter:        1.5rem;
+}

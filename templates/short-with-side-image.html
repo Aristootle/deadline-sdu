@@ -1,0 +1,37 @@
+<!-- ============================================================
+     SHORT ARTICLE TEMPLATE  |  100–400 words  |  SIDE IMAGE
+     Small image floated left or right beside the body text
+     ============================================================
+     HOW TO USE:
+     1. Copy into editions/[vol-no]/articles/ and rename
+     2. Fill in every [PLACEHOLDER]
+     3. To put the image on the RIGHT, change img-side--left to img-side--right
+     4. Adjust --ratio to match your image shape:
+          square symbol / logo  →  --ratio: 100%
+          portrait photo        →  --ratio: 133%
+          landscape photo       →  --ratio: 75%
+     5. Add the filename to edition.json under the right section
+     ============================================================ -->
+
+<article class="article article--short">
+
+  <h2 class="article-headline">[Headline — aim for 4–8 words, direct]</h2>
+
+  <p class="article-byline">
+    [Author Name or Desk] <span>&middot;</span> Vol. [X], No. [Y]
+  </p>
+
+  <div class="article-body">
+
+    <!-- Image floated to the side. Change img-side--left to img-side--right to flip. -->
+    <div class="img-side img-side--left">
+      <div class="img-placeholder" style="--ratio: 100%;" role="img" aria-label="[Describe the image]"></div>
+      <p class="img-caption">[Short caption.]</p>
+    </div>
+
+    <!-- 1–3 paragraphs. The text wraps around the image. -->
+    <p>[Body text. One to three paragraphs, 100–400 words total. The first paragraph sits beside the image; longer articles will flow below it naturally.]</p>
+
+  </div>
+
+</article>

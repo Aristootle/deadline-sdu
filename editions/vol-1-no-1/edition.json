@@ -1,0 +1,34 @@
+{
+  "volume": 1,
+  "number": 1,
+  "date": "August 2026",
+  "institution": "University of Southern Denmark, Sønderborg",
+  "lead": "dorms-website.html",
+  "sections": [
+    {
+      "id": "campus",
+      "label": "Campus",
+      "articles": ["curriculum-changes.html", "building-renovation.html", "metrics-students.html", "fem-dispensers.html", "coordinator-frank.html"]
+    },
+    {
+      "id": "student-life",
+      "label": "Student Life",
+      "articles": ["cafeen-expansion.html", "sport-clubs.html", "upcoming-events.html"]
+    },
+    {
+      "id": "science",
+      "label": "Science & Innovation",
+      "articles": ["startup-innofounder.html"]
+    },
+    {
+      "id": "beyond-sdu",
+      "label": "Beyond SDU",
+      "articles": ["denmark-news.html"]
+    },
+    {
+      "id": "culture",
+      "label": "Culture",
+      "articles": ["danish-words.html"]
+    }
+  ]
+}

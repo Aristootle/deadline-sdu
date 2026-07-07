@@ -1,0 +1,58 @@
+<!-- ============================================================
+     LONG ARTICLE TEMPLATE  |  800–1200 words  |  INLINE IMAGE
+     2-column body, drop cap, pull quote, image mid-article
+     ============================================================
+     HOW TO USE:
+     1. Copy into editions/[vol-no]/articles/ and rename
+     2. Fill in every [PLACEHOLDER]
+     3. The .img-inline block spans both text columns automatically.
+        Move it earlier or later in the article as needed.
+     4. Adjust --ratio to match your image shape:
+          16:9 landscape  →  --ratio: 56.25%
+          3:2             →  --ratio: 66.66%
+          2:1 wide        →  --ratio: 50%
+     5. Add the filename to edition.json under the right section
+
+     Use this when a photo works better mid-story than at the top —
+     for example to illustrate a specific moment mentioned in the text.
+     ============================================================ -->
+
+<article class="article article--long">
+
+  <h2 class="article-headline">[Headline — aim for 8–12 words, active and specific]</h2>
+
+  <p class="article-byline">
+    By [Author Name], [Role] <span>&middot;</span> Vol. [X], No. [Y]
+  </p>
+
+  <div class="article-body">
+    <!-- The first letter of the first paragraph becomes a drop cap automatically. -->
+
+    <p>[Opening paragraph. 120–150 words. Lead with the most important fact.]</p>
+
+    <p>[Second paragraph. Context or background. 100–130 words.]</p>
+
+    <!-- Inline image — spans both text columns. Move this block to wherever
+         it best illustrates the surrounding text. -->
+    <div class="img-inline">
+      <div class="img-placeholder" style="--ratio: 56.25%;" role="img" aria-label="[Describe the photo for screen readers]"></div>
+      <p class="img-caption">[Caption sentence. Photo: Photographer Name / Deadline]</p>
+    </div>
+
+    <p>[Third paragraph. Second source, data point, or contrasting view. 100–130 words.]</p>
+
+    <!-- Pull quote — spans both text columns automatically. -->
+    <blockquote class="pull-quote">
+      <p>&#8220;[A striking quote from a source, or a key finding as a sentence.]&#8221;</p>
+      <cite>&#8212; [Source Name, Title or Affiliation]</cite>
+    </blockquote>
+
+    <p>[Fourth paragraph. Continue after the pull quote. 100–130 words.]</p>
+
+    <p>[Fifth paragraph. Broaden the context or add another voice. 100–130 words.]</p>
+
+    <p>[Sixth paragraph. Closing — look ahead, give the reader a takeaway. 80–100 words.]</p>
+
+  </div>
+
+</article>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster — Deadline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --color-bg:      #FFFDF7;
+      --color-text:    #1A1A1A;
+      --color-accent:  #8B0000;
+      --color-rule:    #C4B49A;
+      --color-muted:   #6B6860;
+      --color-sidebar: #F5F0E8;
+      --font-headline: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-body:     'Merriweather', Georgia, 'Times New Roman', serif;
+      --font-ui:       'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --col-count: 3;
+      --img-max-h: 85mm;
+      --body-font-size: 13pt;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    html, body { background: #ffffff; font-family: var(--font-body); color: var(--color-text); }
+
+    /* ── POSTER SHEET ──────────────────────────────────────────── */
+    .poster {
+      background: var(--color-bg);
+      width: 297mm;
+      height: 420mm;
+      overflow: hidden;
+      margin: 2rem auto;
+      padding: 12mm 16mm 13mm;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.22);
+    }
+
+    /* ── MASTHEAD ──────────────────────────────────────────────── */
+    .poster-masthead {
+      flex-shrink: 0;
+      text-align: center;
+      padding-bottom: 4mm;
+    }
+    .poster-masthead-rule {
+      height: 7px;
+      margin-bottom: 3mm;
+      background:
+        linear-gradient(var(--color-text), var(--color-text)) top    / 100% 1px no-repeat,
+        linear-gradient(var(--color-text), var(--color-text)) center / 100% 4px no-repeat,
+        linear-gradient(var(--color-text), var(--color-text)) bottom / 100% 1px no-repeat;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .poster-masthead-name {
+      font-family: var(--font-headline);
+      font-size: 40pt;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 2mm;
+    }
+    .poster-masthead-meta {
+      font-family: var(--font-ui);
+      font-size: 6.5pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    /* ── CONTENT AREA ──────────────────────────────────────────── */
+    .poster-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; margin-top: 4mm; }
+    .poster-article-header { flex-shrink: 0; }
+
+    .poster-lead-image { max-height: var(--img-max-h); overflow: hidden; margin-bottom: 2.5mm; }
+
+    .img-placeholder { background: #D9D2C4; width: 100%; position: relative; }
+    .img-placeholder::after { content: ''; display: block; padding-bottom: var(--ratio, 56.25%); }
+
+    .img-caption { font-family: var(--font-ui); font-size: 9.5pt; color: var(--color-muted); margin-bottom: 2.5mm; line-height: 1.4; }
+
+    .article-headline {
+      font-family: var(--font-headline);
+      font-size: 45pt;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 2mm;
+    }
+    .article-byline {
+      font-family: var(--font-ui);
+      font-size: 9.5pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding-bottom: 2.5mm;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    .article-byline span { margin: 0 0.35em; opacity: 0.4; }
+
+    /* ── COLUMNS ───────────────────────────────────────────────── */
+    .poster-cols {
+      flex: 1;
+      overflow: hidden;
+      margin-top: 3mm;
+      column-count: var(--col-count);
+      column-gap: 7mm;
+      column-rule: 1px solid var(--color-rule);
+      column-fill: balance;
+    }
+    .poster-cols p { font-size: var(--body-font-size); line-height: 1.72; margin-bottom: 2.5mm; text-align: justify; hyphens: auto; }
+
+    .img-inline { break-inside: avoid; margin: 3.5mm 0; }
+    .img-inline .img-placeholder { max-height: 55mm; overflow: hidden; margin-bottom: 1.5mm; }
+    .img-side { break-inside: avoid; margin-bottom: 2.5mm; }
+    .img-side--right { float: right; margin-left: 4.5mm; }
+    .img-side .img-placeholder { max-height: 55mm; overflow: hidden; }
+
+    .pull-quote { break-inside: avoid; border-top: 2px solid var(--color-text); border-bottom: 2px solid var(--color-text); margin: 4mm 0; padding: 3mm 0; }
+    .pull-quote p { font-family: var(--font-headline); font-size: 24pt !important; font-style: italic; line-height: 1.35 !important; text-align: left !important; margin-bottom: 1.5mm !important; color: var(--color-accent); }
+    .pull-quote cite { font-family: var(--font-ui); font-size: 7pt; color: var(--color-muted); font-style: normal; letter-spacing: 0.06em; }
+
+    /* ── QR / CTA STRIP ────────────────────────────────────────── */
+    .poster-cta {
+      break-inside: avoid;
+      margin-top: 3.5mm;
+      padding: 3mm 4mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      background: var(--color-sidebar);
+      border-top: 1px solid var(--color-rule);
+      border-bottom: 1px solid var(--color-rule);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .poster-cta-text { flex: 1; }
+    .poster-cta-label {
+      font-family: var(--font-ui);
+      font-size: 8pt;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 1mm;
+    }
+    .poster-cta-name {
+      font-family: var(--font-headline);
+      font-size: 16pt;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      line-height: 1;
+      margin-bottom: 1mm;
+    }
+    .poster-cta-url {
+      font-family: var(--font-ui);
+      font-size: 8pt;
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+    }
+    #posterQr {
+      flex-shrink: 0;
+      width: 21mm;
+      height: 21mm;
+      display: block;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .poster-footer {
+      flex-shrink: 0;
+      margin-top: 2.5mm;
+      padding-top: 2mm;
+      border-top: 1px solid var(--color-rule);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-ui);
+      font-size: 6.5pt;
+      color: var(--color-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SCREEN UI ─────────────────────────────────────────────── */
+    .poster-ui {
+      width: 297mm;
+      margin: 1.5rem auto 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: #333;
+    }
+    .poster-ui input[type="text"] {
+      padding: 0.38em 0.65em;
+      font-family: inherit;
+      font-size: inherit;
+      border: 1px solid #aaa;
+      background: #fff;
+    }
+    .poster-ui #articleInput { flex: 1; min-width: 180px; }
+    .poster-ui #qrInput { width: 160px; }
+    .poster-ui button {
+      padding: 0.38em 1em;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 600;
+      background: #1A1A1A;
+      color: #FFFDF7;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .poster-ui button:hover { background: #8B0000; }
+    .poster-ui label { display: flex; align-items: center; gap: 0.35em; white-space: nowrap; }
+    .poster-ui select { font-family: inherit; font-size: inherit; padding: 0.2em 0.3em; }
+    .poster-ui input[type="range"] { width: 80px; cursor: pointer; accent-color: #8B0000; }
+    .poster-ui .ui-sep { width: 1px; height: 1.2em; background: #bbb; margin: 0 0.15rem; }
+
+    .poster-error {
+      width: 297mm;
+      margin: 0 auto 0.6rem;
+      padding: 0.55rem 1rem;
+      background: #fff5f5;
+      border-left: 4px solid #8B0000;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: #8B0000;
+      display: none;
+    }
+
+    /* ── PRINT ─────────────────────────────────────────────────── */
+    @media print {
+      html, body { background: white; margin: 0; padding: 0; }
+      .poster-ui, .poster-error { display: none !important; }
+      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; }
+      @page { size: A3 portrait; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poster-ui">
+    <input type="text" id="articleInput" placeholder="editions/vol-1-no-1/articles/dorms-website.html">
+    <button onclick="loadArticle()">Load</button>
+    <div class="ui-sep"></div>
+    <label>Columns
+      <select id="colSelect" onchange="setCols(this.value)">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+      </select>
+    </label>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+  <div class="poster-error" id="posterError"></div>
+
+  <div class="poster" id="poster">
+
+    <header class="poster-masthead">
+      <div class="poster-masthead-rule"></div>
+      <p class="poster-masthead-name">Deadline</p>
+      <p class="poster-masthead-meta" id="posterMeta">The Independent Voice of SDU Students</p>
+    </header>
+
+    <div class="poster-content">
+      <div class="poster-article-header" id="posterHeader"></div>
+      <div class="poster-cols" id="posterCols">
+        <p style="color:#6B6860;font-family:'Libre Franklin',sans-serif;font-size:9pt;padding-top:4mm;">
+          Enter an article path above and click Load, or open with
+          <code>?article=editions/vol-1-no-1/articles/dorms-website.html</code>
+        </p>
+      </div>
+    </div>
+
+    <footer class="poster-footer">
+      <span>Deadline &mdash; The Independent Voice of SDU Students</span>
+      <span id="posterFooterMeta"></span>
+    </footer>
+
+  </div>
+
+  <script>
+    (async function init() {
+      try {
+        var indexRes = await fetch('index.html');
+        if (indexRes.ok) {
+          var match = (await indexRes.text()).match(/data-edition="([^"]+)"/);
+          if (match) {
+            var ed = await (await fetch(match[1])).json();
+            document.getElementById('posterMeta').textContent =
+              'Vol. ' + ed.volume + ', No. ' + ed.number +
+              ' · ' + ed.date + ' · ' + ed.institution;
+            document.getElementById('posterFooterMeta').textContent =
+              'Vol. ' + ed.volume + ', No. ' + ed.number + ' · ' + ed.date;
+          }
+        }
+      } catch (e) {}
+
+      updateQR();
+
+      var params = new URLSearchParams(window.location.search);
+      var p = params.get('article');
+      if (p) {
+        document.getElementById('articleInput').value = p;
+        loadArticle(p);
+      }
+    })();
+
+    async function loadArticle(path) {
+      var errorEl = document.getElementById('posterError');
+      errorEl.style.display = 'none';
+      path = path || document.getElementById('articleInput').value.trim();
+      if (!path) return;
+
+      try {
+        var res = await fetch(path);
+        if (!res.ok) throw new Error('Could not load article (HTTP ' + res.status + ')');
+
+        var tmp = document.createElement('div');
+        tmp.innerHTML = (await res.text()).trim();
+        var article = tmp.firstElementChild || tmp;
+
+        var headerEl = document.getElementById('posterHeader');
+        var colsEl   = document.getElementById('posterCols');
+        headerEl.innerHTML = '';
+        colsEl.innerHTML   = '';
+
+        var headline = article.querySelector('.article-headline');
+        var byline   = article.querySelector('.article-byline');
+        var body     = article.querySelector('.article-body');
+
+        if (headline) headerEl.appendChild(headline.cloneNode(true));
+        if (byline)   headerEl.appendChild(byline.cloneNode(true));
+
+        if (headline) {
+          var leadWrap = document.createElement('div');
+          leadWrap.className = 'poster-lead-image';
+          var node = article.firstChild;
+          while (node && node !== headline) {
+            leadWrap.appendChild(node.cloneNode(true));
+            node = node.nextSibling;
+          }
+          if (leadWrap.children.length) colsEl.appendChild(leadWrap);
+        }
+
+        if (body) colsEl.innerHTML += body.innerHTML;
+
+        // Append CTA as last element so column balancing accounts for its height
+        var cta = document.createElement('div');
+        cta.className = 'poster-cta';
+        cta.innerHTML =
+          '<div class="poster-cta-text">' +
+            '<p class="poster-cta-label">For more student news from SDU Sønderborg</p>' +
+            '<p class="poster-cta-name">Deadline</p>' +
+            '<p class="poster-cta-url" id="posterCtaUrl"></p>' +
+          '</div>' +
+          '<canvas id="posterQr"></canvas>';
+        colsEl.appendChild(cta);
+        updateQR();
+
+        document.title = 'Poster — ' + (headline ? headline.textContent.trim() : 'Deadline');
+      } catch (e) {
+        errorEl.textContent = e.message + '. Run a local server: python -m http.server 8000';
+        errorEl.style.display = 'block';
+      }
+    }
+
+    function updateQR() {
+      var raw    = 'sdu-deadline.dk';
+      var urlEl  = document.getElementById('posterCtaUrl');
+      var canvas = document.getElementById('posterQr');
+      if (urlEl)  urlEl.textContent = raw;
+      if (!canvas) return;
+      QRCode.toCanvas(canvas, 'https://' + raw, {
+        width: 120,
+        margin: 1,
+        color: { dark: '#1A1A1A', light: '#F5F0E8' }
+      }, function () {});
+    }
+
+    function setCols(n) {
+      document.getElementById('poster').style.setProperty('--col-count', n);
+    }
+
+    document.getElementById('articleInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') loadArticle();
+    });
+  </script>
+
+</body>
+</html>

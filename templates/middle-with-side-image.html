@@ -1,0 +1,47 @@
+<!-- ============================================================
+     MIDDLE ARTICLE TEMPLATE  |  400–800 words  |  SIDE IMAGE
+     Small image floated left or right beside the body text
+     ============================================================
+     HOW TO USE:
+     1. Copy into editions/[vol-no]/articles/ and rename
+     2. Fill in every [PLACEHOLDER]
+     3. To put the image on the RIGHT, change img-side--left to img-side--right
+     4. Adjust the width in the style attribute to suit the image:
+          small graphic / logo  →  width: 120px
+          portrait photo        →  width: 160px
+          landscape photo       →  width: 200px
+     5. Adjust --ratio to match your image shape:
+          square                →  --ratio: 100%
+          portrait              →  --ratio: 133%
+          landscape             →  --ratio: 66.66%
+     6. Add the filename to edition.json under the right section
+     ============================================================ -->
+
+<article class="article article--middle">
+
+  <h2 class="article-headline">[Headline — aim for 6–10 words]</h2>
+
+  <p class="article-byline">
+    By [Author Name], [Role] <span>&middot;</span> Vol. [X], No. [Y]
+  </p>
+
+  <div class="article-body">
+    <!-- Image floated to the side. The text wraps around it.
+         Change img-side--left to img-side--right to flip. -->
+    <div class="img-side img-side--left" style="width: 160px;">
+      <div class="img-placeholder" style="--ratio: 66.66%;" role="img" aria-label="[Describe the photo]"></div>
+      <p class="img-caption">[Caption. Photo: Photographer Name / Deadline]</p>
+    </div>
+
+    <!-- First paragraph gets a drop cap automatically. -->
+    <p>[Opening paragraph. 100–130 words. Lead with the key fact or development.]</p>
+
+    <p>[Second paragraph. Background or context. 100–120 words.]</p>
+
+    <p>[Third paragraph. A quote, data point, or contrasting view. 80–100 words.]</p>
+
+    <p>[Fourth paragraph. Closing — outcome, next steps, or what this means for readers. 60–80 words.]</p>
+
+  </div>
+
+</article>

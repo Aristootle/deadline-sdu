@@ -1,0 +1,355 @@
+/* === SECONDARY ARTICLE SPACING (inside front-grid-secondary) === */
+
+.front-grid-secondary .article + .article {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+/* === EDITION SECTIONS === */
+
+.edition-section {
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.edition-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.28em 0.7em;
+  flex-shrink: 0;
+}
+
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
+}
+
+/* === FRONT PAGE FEATURE GRID === */
+
+.front-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0 2rem;
+}
+
+.front-grid-secondary {
+  border-left: 1px solid var(--color-rule);
+  padding-left: 2rem;
+}
+
+.secondaries {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 2rem;
+  margin-top: 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.secondaries .article + .article {
+  border-left: 1px solid var(--color-rule);
+  padding-left: 2rem;
+}
+
+/* === ARTICLE SIZE CLASSES ===
+   Use these on every article element.
+   article--long   800–1200 words — 2-col body, drop cap, requires image + pull quote
+   article--middle 400–800 words  — 1-col body, drop cap, optional image
+   article--short  100–400 words  — 1-col body, no drop cap, no image
+*/
+
+.article--long .article-headline {
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.article--long .article-body {
+  column-count: 2;
+  column-gap: 2rem;
+  column-rule: 1px solid var(--color-rule);
+}
+
+.article--middle .article-headline {
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+}
+
+.article--middle .article-body {
+  column-count: 1;
+}
+
+.article--short .article-headline {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.article--short .article-body {
+  column-count: 1;
+}
+
+/* Suppress drop cap on short articles */
+.article--short .article-body p:first-of-type::first-letter {
+  font-size: 1em;
+  float: none;
+  line-height: inherit;
+  margin: 0;
+  font-weight: inherit;
+}
+
+@media (max-width: 900px) {
+  .article--long .article-body {
+    column-count: 1;
+  }
+}
+
+/* === ARTICLES === */
+
+.article-headline {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.4rem;
+  color: var(--color-text);
+}
+
+.article--lead .article-headline {
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.article--secondary .article-headline {
+  font-size: 1.15rem;
+}
+
+.article--brief .article-headline {
+  font-size: 1rem;
+}
+
+.article-byline {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.article-byline span {
+  margin: 0 0.3em;
+  opacity: 0.45;
+}
+
+/* === ARTICLE BODY === */
+
+.article-body {
+  font-size: 0.91rem;
+  line-height: 1.8;
+}
+
+.article--lead .article-body {
+  column-count: 2;
+  column-gap: 2rem;
+  column-rule: 1px solid var(--color-rule);
+}
+
+.article-body p {
+  margin-bottom: 0.9em;
+  orphans: 3;
+  widows: 3;
+}
+
+.article-body p:not(.img-caption):first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-headline);
+  font-size: 4.1em;
+  font-weight: 900;
+  line-height: 0.75;
+  margin: 0.08em 0.1em 0 0;
+  color: var(--color-text);
+}
+
+/* === PULL QUOTE === */
+
+.pull-quote {
+  column-span: all;
+  background: var(--color-sidebar);
+  border-left: 4px solid var(--color-accent);
+  padding: 1.25rem 1.5rem 1.25rem 2.5rem;
+  margin: 1.75rem 0;
+  position: relative;
+  break-inside: avoid;
+}
+
+.pull-quote::before {
+  content: '\201C';
+  font-family: var(--font-headline);
+  font-size: 6em;
+  color: var(--color-accent);
+  opacity: 0.2;
+  position: absolute;
+  top: -0.15em;
+  left: 0.2rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.pull-quote p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin: 0 0 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.pull-quote cite {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+/* === IMAGE PLACEHOLDERS === */
+
+.img-placeholder {
+  position: relative;
+  width: 100%;
+  padding-bottom: var(--ratio, 56.25%);
+  background: #D9D2C4;
+  margin-bottom: 0.4rem;
+  overflow: hidden;
+}
+
+.img-placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 18px,
+    rgba(0, 0, 0, 0.04) 18px,
+    rgba(0, 0, 0, 0.04) 36px
+  );
+}
+
+.img-caption {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  font-style: italic;
+  color: var(--color-muted);
+  margin-bottom: 0.85rem;
+  line-height: 1.4;
+}
+
+/* === SIDE IMAGE (short articles with a small image floated left or right) === */
+
+.img-side {
+  width: 120px;
+  margin-bottom: 0.5rem;
+}
+
+.img-side--left {
+  float: left;
+  margin-right: 1.1rem;
+}
+
+.img-side--right {
+  float: right;
+  margin-left: 1.1rem;
+}
+
+.img-side .img-caption {
+  margin-bottom: 0;
+}
+
+/* Inline image inside a 2-column long article — stays within one column */
+.img-inline {
+  margin: 1.25rem 0;
+}
+
+.img-inline .img-caption {
+  margin-bottom: 0;
+}
+
+/* Prevent float bleed into the next article */
+.article--short::after,
+.article--middle::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* === BRIEF / SINGLE-COL OVERRIDES === */
+
+.article--single .article-body {
+  column-count: 1;
+}
+
+.article--brief .article-body p:first-of-type::first-letter {
+  font-size: 1em;
+  float: none;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* === SECTION-SPECIFIC SPACING === */
+
+.article-group {
+  margin-top: 2rem;
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 900px) {
+  .front-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .front-grid-secondary {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 1.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .secondaries {
+    grid-template-columns: 1fr;
+  }
+
+  .secondaries .article + .article {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .article--lead .article-body {
+    column-count: 1;
+  }
+}

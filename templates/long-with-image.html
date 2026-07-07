@@ -1,0 +1,54 @@
+<!-- ============================================================
+     LONG ARTICLE TEMPLATE  |  800–1200 words
+     Always includes: image, pull quote, 2-column body, drop cap
+     ============================================================
+     HOW TO USE:
+     1. Copy this file into editions/[vol-no]/articles/
+     2. Rename it to something descriptive, e.g. my-article.html
+     3. Fill in every [PLACEHOLDER]
+     4. Add the filename to edition.json under the right section
+     ============================================================ -->
+
+<article class="article article--long">
+
+  <!-- Image block — remove both lines if no image is ready yet,
+       or swap the div for a real <img> + <figcaption> when you have the photo.
+       --ratio controls the image height as a percentage of width:
+       16:9 = 56.25%  |  3:2 = 66.66%  |  2:1 = 50%  |  4:3 = 75%  -->
+  <div class="img-placeholder" style="--ratio: 52%;" role="img" aria-label="[Describe the photo for screen readers]"></div>
+  <p class="img-caption">[Caption sentence. Photo: Photographer Name / Deadline]</p>
+
+  <h2 class="article-headline">[Headline — aim for 8–12 words, active and specific]</h2>
+
+  <p class="article-byline">
+    By [Author Name], [Role e.g. Campus Reporter] <span>&middot;</span> Vol. [X], No. [Y]
+  </p>
+
+  <div class="article-body">
+    <!-- The first letter of the first paragraph becomes a drop cap automatically. -->
+
+    <p>[Opening paragraph. Aim for 120–150 words. Lead with the most important fact — who, what, where, when. Hook the reader in the first sentence.]</p>
+
+    <p>[Second paragraph. Develop the story with context or background. 100–130 words.]</p>
+
+    <p>[Third paragraph. Add a second source, data point, or perspective. 100–130 words.]</p>
+
+    <!-- Pull quote — pick the most striking single sentence from the article.
+         It should stand alone and be worth reading out of context.
+         The pull quote automatically spans both text columns. -->
+    <blockquote class="pull-quote">
+      <p>&#8220;[A striking quote from a source, or a key finding stated as a sentence.]&#8221;</p>
+      <cite>&#8212; [Source Name, Title or Affiliation]</cite>
+    </blockquote>
+
+    <p>[Fourth paragraph. Continue after the pull quote — this is a good place for a rebuttal, contrast, or deeper explanation. 100–130 words.]</p>
+
+    <p>[Fifth paragraph. Broaden the context or add another voice. 100–130 words.]</p>
+
+    <p>[Sixth paragraph. Closing paragraph — look ahead, give the reader something to take away. 80–100 words.]</p>
+
+    <!-- For 1000+ word articles, add a seventh paragraph here. -->
+
+  </div>
+
+</article>
