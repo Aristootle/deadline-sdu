@@ -1,0 +1,45 @@
+<!-- ============================================================
+     TWO-SHORT LAYOUT TEMPLATE  |  2 × 100–400 words side by side
+     ============================================================
+     HOW TO USE:
+     1. Write each article as its own file using short-no-image.html
+        or short-with-side-image.html as a starting point
+     2. In edition.json, declare the section with layout "doubles":
+
+          {
+            "id": "your-section-id",
+            "label": "Your Section Label",
+            "layout": "doubles",
+            "articles": ["first-short.html", "second-short.html"]
+          }
+
+     3. The loader wraps both articles in a .doubles grid automatically.
+        Articles sit side by side on desktop and stack on mobile (≤900px).
+     ============================================================
+     BELOW: static preview of what the loader produces at runtime.
+     Do NOT add this wrapper yourself in the article files.
+     ============================================================ -->
+
+<div class="doubles">
+
+  <article class="article article--short">
+    <h2 class="article-headline">[First Headline — 4–8 words]</h2>
+    <p class="article-byline">
+      [Author Name or Desk] <span>&middot;</span> Vol. [X], No. [Y]
+    </p>
+    <div class="article-body">
+      <p>[Body text. One to three paragraphs, 100–400 words total.]</p>
+    </div>
+  </article>
+
+  <article class="article article--short">
+    <h2 class="article-headline">[Second Headline — 4–8 words]</h2>
+    <p class="article-byline">
+      [Author Name or Desk] <span>&middot;</span> Vol. [X], No. [Y]
+    </p>
+    <div class="article-body">
+      <p>[Body text. One to three paragraphs, 100–400 words total.]</p>
+    </div>
+  </article>
+
+</div>

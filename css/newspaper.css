@@ -72,6 +72,17 @@
   padding-left: 2rem;
 }
 
+.doubles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 2rem;
+}
+
+.doubles .article + .article {
+  border-left: 1px solid var(--color-rule);
+  padding-left: 2rem;
+}
+
 /* === ARTICLE SIZE CLASSES ===
    Use these on every article element.
    article--long   800–1200 words — 2-col body, drop cap, requires image + pull quote
@@ -322,6 +333,14 @@
   margin-top: 2rem;
 }
 
+.edition-section > .article + .article,
+.edition-section > .article + .doubles,
+.edition-section > .doubles + .article {
+  border-top: 1px solid var(--color-rule);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
 /* === RESPONSIVE === */
 
 @media (max-width: 900px) {
@@ -342,6 +361,18 @@
   }
 
   .secondaries .article + .article {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .doubles {
+    grid-template-columns: 1fr;
+  }
+
+  .doubles .article + .article {
     border-left: none;
     padding-left: 0;
     border-top: 1px solid var(--color-rule);

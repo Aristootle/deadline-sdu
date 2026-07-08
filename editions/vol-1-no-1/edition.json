@@ -3,32 +3,31 @@
   "number": 1,
   "date": "August 2026",
   "institution": "University of Southern Denmark, Sønderborg",
-  "lead": "dorms-website.html",
+  "lead": "cafeen-expansion.html", 
   "sections": [
     {
       "id": "campus",
       "label": "Campus",
-      "articles": ["curriculum-changes.html", "building-renovation.html", "metrics-students.html", "fem-dispensers.html", "coordinator-frank.html"]
+      "groups": [
+        { "articles": ["curriculum-changes.html"] },
+        { "layout": "doubles", "articles": ["building-renovation.html", "metrics-students.html"] },
+        { "articles": ["coordinator-frank.html"] }
+      ]
     },
     {
-      "id": "student-life",
-      "label": "Student Life",
-      "articles": ["cafeen-expansion.html", "sport-clubs.html", "upcoming-events.html"]
+      "id": "student-organisations",
+      "label": "Student Organisations",
+      "articles": ["fem-dispensers.html","sport-clubs.html", "upcoming-events.html"]
     },
     {
       "id": "science",
       "label": "Science & Innovation",
-      "articles": ["startup-innofounder.html"]
+      "articles": ["dorms-website.html", "startup-innofounder.html"]
     },
     {
       "id": "beyond-sdu",
       "label": "Beyond SDU",
-      "articles": ["denmark-news.html"]
-    },
-    {
-      "id": "culture",
-      "label": "Culture",
-      "articles": ["danish-words.html"]
+      "articles": ["denmark-news.html", "danish-words.html"]
     }
   ]
 }

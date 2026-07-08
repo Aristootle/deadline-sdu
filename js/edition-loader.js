@@ -33,6 +33,10 @@
       (section.slots.lead || []).forEach(function (f) { fileSlots.push({ file: f, slot: 'lead' }); });
       (section.slots.secondary || []).forEach(function (f) { fileSlots.push({ file: f, slot: 'secondary' }); });
       (section.after || []).forEach(function (f) { fileSlots.push({ file: f, slot: 'after' }); });
+    } else if (section.groups) {
+      section.groups.forEach(function (group) {
+        (group.articles || []).forEach(function (f) { fileSlots.push({ file: f, slot: 'article' }); });
+      });
     } else {
       (section.articles || []).forEach(function (f) { fileSlots.push({ file: f, slot: 'article' }); });
     }
@@ -135,6 +139,26 @@
 
       si.fileSlots.filter(function (fs) { return fs.slot === 'after'; })
         .forEach(function (fs) { if (fs.el) sectionEl.appendChild(fs.el); });
+    } else if (si.section.groups) {
+      si.section.groups.forEach(function (group) {
+        var groupFiles = group.articles || [];
+        var groupSlots = si.fileSlots.filter(function (fs) {
+          return groupFiles.indexOf(fs.file) !== -1;
+        });
+        if (group.layout === 'doubles') {
+          var doublesDiv = document.createElement('div');
+          doublesDiv.className = 'doubles';
+          groupSlots.forEach(function (fs) { if (fs.el) doublesDiv.appendChild(fs.el); });
+          sectionEl.appendChild(doublesDiv);
+        } else {
+          groupSlots.forEach(function (fs) { if (fs.el) sectionEl.appendChild(fs.el); });
+        }
+      });
+    } else if (si.section.layout === 'doubles') {
+      var doublesDiv = document.createElement('div');
+      doublesDiv.className = 'doubles';
+      si.fileSlots.forEach(function (fs) { if (fs.el) doublesDiv.appendChild(fs.el); });
+      sectionEl.appendChild(doublesDiv);
     } else {
       si.fileSlots.forEach(function (fs) { if (fs.el) sectionEl.appendChild(fs.el); });
     }
