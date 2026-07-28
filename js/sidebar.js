@@ -1,20 +1,25 @@
+var activeObserver = null;
+
 function initSidebar() {
+  if (activeObserver) {
+    activeObserver.disconnect();
+    activeObserver = null;
+  }
+
   var articles = document.querySelectorAll('#edition-main article[id]');
   var articleLinks = document.querySelectorAll('.article-sidebar a[href^="#"]:not(.sidebar-section-label)');
 
   if (!articles.length || !articleLinks.length) return;
 
-  var observer = new IntersectionObserver(function (entries) {
+  activeObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         var id = entry.target.getAttribute('id');
 
-        // Highlight the matching article link
         articleLinks.forEach(function (link) {
           link.classList.toggle('active', link.getAttribute('href') === '#' + id);
         });
 
-        // Highlight the parent section label (used by the 900px horizontal strip)
         document.querySelectorAll('.sidebar-section-label').forEach(function (label) {
           label.classList.remove('active');
         });
@@ -30,7 +35,8 @@ function initSidebar() {
     });
   }, { rootMargin: '-15% 0px -75% 0px' });
 
-  articles.forEach(function (a) { observer.observe(a); });
+  articles.forEach(function (a) { activeObserver.observe(a); });
 }
 
 document.addEventListener('edition-loaded', initSidebar);
+document.addEventListener('tab-changed', initSidebar);

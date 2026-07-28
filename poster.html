@@ -83,8 +83,10 @@
     .img-placeholder { background: #D9D2C4; width: 100%; position: relative; }
     .img-placeholder::after { content: ''; display: block; padding-bottom: var(--ratio, 56.25%); }
 
-    .img-caption { font-family: var(--font-ui); font-size: 9.5pt; color: var(--color-muted); margin-bottom: 2.5mm; line-height: 1.4; }
+    .img-caption { font-family: var(--font-ui); font-size: 7.5pt; color: var(--color-muted); margin-bottom: 2.5mm; line-height: 1.4; }
 
+    
+    /* TITLE FORMAT */
     .article-headline {
       font-family: var(--font-headline);
       font-size: 45pt;
@@ -100,20 +102,32 @@
       text-transform: uppercase;
       color: var(--color-muted);
       padding-bottom: 2.5mm;
-      border-bottom: 1px solid var(--color-rule);
     }
     .article-byline span { margin: 0 0.35em; opacity: 0.4; }
 
     /* ── COLUMNS ───────────────────────────────────────────────── */
+    .poster-sep {
+      flex-shrink: 0;
+      height: 1px;
+      background: var(--color-rule);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
     .poster-cols {
       flex: 1;
-      overflow: hidden;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scrollbar-width: none; /* Firefox */
       margin-top: 3mm;
       column-count: var(--col-count);
       column-gap: 7mm;
       column-rule: 1px solid var(--color-rule);
-      column-fill: balance;
+      column-fill: auto;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
     }
+    .poster-cols::-webkit-scrollbar { display: none; }
     .poster-cols p { font-size: var(--body-font-size); line-height: 1.72; margin-bottom: 2.5mm; text-align: justify; hyphens: auto; }
 
     .img-inline { break-inside: avoid; margin: 3.5mm 0; }
@@ -122,8 +136,8 @@
     .img-side--right { float: right; margin-left: 4.5mm; }
     .img-side .img-placeholder { max-height: 55mm; overflow: hidden; }
 
-    .pull-quote { break-inside: avoid; border-top: 2px solid var(--color-text); border-bottom: 2px solid var(--color-text); margin: 4mm 0; padding: 3mm 0; }
-    .pull-quote p { font-family: var(--font-headline); font-size: 24pt !important; font-style: italic; line-height: 1.35 !important; text-align: left !important; margin-bottom: 1.5mm !important; color: var(--color-accent); }
+    .pull-quote { break-inside: avoid; border-top: 2px solid var(--color-text); border-bottom: 2px solid var(--color-text); margin: 4mm 0; padding: 3mm 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .pull-quote p { font-family: var(--font-headline); font-size: 20pt !important; font-style: italic; line-height: 1.35 !important; text-align: left !important; margin-bottom: 1.5mm !important; color: var(--color-accent); }
     .pull-quote cite { font-family: var(--font-ui); font-size: 7pt; color: var(--color-muted); font-style: normal; letter-spacing: 0.06em; }
 
     /* ── QR / CTA STRIP ────────────────────────────────────────── */
@@ -178,7 +192,6 @@
       flex-shrink: 0;
       margin-top: 2.5mm;
       padding-top: 2mm;
-      border-top: 1px solid var(--color-rule);
       display: flex;
       justify-content: space-between;
       font-family: var(--font-ui);
@@ -237,11 +250,27 @@
       display: none;
     }
 
+    /* ── CONTINUATION PAGES ───────────────────────────────────── */
+    .poster--continuation .poster-masthead-name { font-size: 22pt; }
+    .poster-cont-label {
+      font-family: var(--font-ui);
+      font-size: 7.5pt;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-top: 1.5mm;
+      padding-top: 1.5mm;
+      border-top: 1px solid var(--color-rule);
+    }
+
     /* ── PRINT ─────────────────────────────────────────────────── */
     @media print {
       html, body { background: white; margin: 0; padding: 0; }
       .poster-ui, .poster-error { display: none !important; }
-      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; }
+      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; break-after: page; }
+      .poster-cols { column-rule-color: #1A1A1A; }
+      .article-byline, .poster-footer, .poster-masthead { border-color: #1A1A1A; }
+      .pull-quote { border-top-color: #1A1A1A; border-bottom-color: #1A1A1A; }
       @page { size: A3 portrait; margin: 0; }
     }
   </style>
@@ -273,6 +302,7 @@
 
     <div class="poster-content">
       <div class="poster-article-header" id="posterHeader"></div>
+      <div class="poster-sep" id="posterBylineSep" style="display:none;"></div>
       <div class="poster-cols" id="posterCols">
         <p style="color:#6B6860;font-family:'Libre Franklin',sans-serif;font-size:9pt;padding-top:4mm;">
           Enter an article path above and click Load, or open with
@@ -281,6 +311,7 @@
       </div>
     </div>
 
+    <div class="poster-sep"></div>
     <footer class="poster-footer">
       <span>Deadline &mdash; The Independent Voice of SDU Students</span>
       <span id="posterFooterMeta"></span>
@@ -333,6 +364,7 @@
         var colsEl   = document.getElementById('posterCols');
         headerEl.innerHTML = '';
         colsEl.innerHTML   = '';
+        removeExtraPages();
 
         var headline = article.querySelector('.article-headline');
         var byline   = article.querySelector('.article-byline');
@@ -340,6 +372,7 @@
 
         if (headline) headerEl.appendChild(headline.cloneNode(true));
         if (byline)   headerEl.appendChild(byline.cloneNode(true));
+        document.getElementById('posterBylineSep').style.display = byline ? '' : 'none';
 
         if (headline) {
           var leadWrap = document.createElement('div');
@@ -366,6 +399,7 @@
           '<canvas id="posterQr"></canvas>';
         colsEl.appendChild(cta);
         updateQR();
+        paginateContent(headline ? headline.textContent.trim() : '');
 
         document.title = 'Poster — ' + (headline ? headline.textContent.trim() : 'Deadline');
       } catch (e) {
@@ -388,7 +422,76 @@
     }
 
     function setCols(n) {
-      document.getElementById('poster').style.setProperty('--col-count', n);
+      document.querySelectorAll('.poster').forEach(function(p) {
+        p.style.setProperty('--col-count', n);
+      });
+    }
+
+    function escapeHTML(str) {
+      var d = document.createElement('div');
+      d.appendChild(document.createTextNode(str));
+      return d.innerHTML;
+    }
+
+    function removeExtraPages() {
+      document.querySelectorAll('.poster--continuation').forEach(function(el) { el.remove(); });
+    }
+
+    function createContinuationPoster(pageNum, articleTitle) {
+      var metaText = document.getElementById('posterMeta').textContent;
+      var footerMetaText = document.getElementById('posterFooterMeta').textContent;
+      var cols = document.getElementById('poster').style.getPropertyValue('--col-count') || '3';
+      var cont = document.createElement('div');
+      cont.className = 'poster poster--continuation';
+      cont.style.setProperty('--col-count', cols);
+      cont.innerHTML =
+        '<header class="poster-masthead poster-masthead--continuation">' +
+          '<div class="poster-masthead-rule"></div>' +
+          '<p class="poster-masthead-name">Deadline</p>' +
+          '<p class="poster-masthead-meta">' + escapeHTML(metaText) + '</p>' +
+          (articleTitle ? '<p class="poster-cont-label">' + escapeHTML(articleTitle) + ' — continued</p>' : '') +
+        '</header>' +
+        '<div class="poster-content">' +
+          '<div class="poster-cols" id="posterCols-' + pageNum + '"></div>' +
+        '</div>' +
+        '<footer class="poster-footer">' +
+          '<span>Deadline — The Independent Voice of SDU Students</span>' +
+          '<span>' + escapeHTML(footerMetaText) + '</span>' +
+        '</footer>';
+      return cont;
+    }
+
+    function paginateContent(articleTitle) {
+      var currentCols = document.getElementById('posterCols');
+      var currentPoster = document.getElementById('poster');
+      var pageNum = 2;
+      var MAX_PAGES = 10;
+
+      while (currentCols.scrollWidth > currentCols.clientWidth + 2 && pageNum <= MAX_PAGES) {
+        var newPoster = createContinuationPoster(pageNum, articleTitle);
+        currentPoster.after(newPoster);
+        var newCols = newPoster.querySelector('.poster-cols');
+
+        while (currentCols.scrollWidth > currentCols.clientWidth + 2 && currentCols.children.length > 1) {
+          newCols.prepend(currentCols.lastElementChild);
+        }
+
+        currentPoster = newPoster;
+        currentCols = newCols;
+        pageNum++;
+      }
+
+      // Shrink continuation pages to fit their content
+      document.querySelectorAll('.poster--continuation').forEach(function(p) {
+        p.style.height = 'auto';
+        p.style.overflow = 'visible';
+        var content = p.querySelector('.poster-content');
+        if (content) { content.style.overflow = 'visible'; content.style.flex = 'none'; }
+        var cols = p.querySelector('.poster-cols');
+        if (cols) { cols.style.flex = 'none'; cols.style.columnFill = 'balance'; cols.style.overflow = 'visible'; }
+      });
+
+      updateQR();
     }
 
     document.getElementById('articleInput').addEventListener('keydown', function (e) {

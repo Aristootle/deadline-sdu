@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Headlines Poster — Deadline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --color-bg:      #FFFDF7;
+      --color-text:    #1A1A1A;
+      --color-accent:  #8B0000;
+      --color-rule:    #C4B49A;
+      --color-muted:   #6B6860;
+      --color-sidebar: #F5F0E8;
+      --font-headline: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-body:     'Merriweather', Georgia, 'Times New Roman', serif;
+      --font-ui:       'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --item-headline-size: 48pt;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { color: inherit; text-decoration: none; }
+    html, body { background: #ffffff; font-family: var(--font-body); color: var(--color-text); }
+
+    /* ── POSTER SHEET ──────────────────────────────────────────── */
+    .poster {
+      background: var(--color-bg);
+      width: 297mm;
+      height: 420mm;
+      overflow: hidden;
+      margin: 2rem auto;
+      padding: 12mm 16mm 13mm;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.22);
+    }
+
+    /* ── MASTHEAD ──────────────────────────────────────────────── */
+    .poster-masthead {
+      flex-shrink: 0;
+      text-align: center;
+      padding-bottom: 4mm;
+    }
+    .poster-masthead-rule {
+      height: 7px;
+      margin-bottom: 3mm;
+      background:
+        linear-gradient(var(--color-text), var(--color-text)) top    / 100% 1px no-repeat,
+        linear-gradient(var(--color-text), var(--color-text)) center / 100% 4px no-repeat,
+        linear-gradient(var(--color-text), var(--color-text)) bottom / 100% 1px no-repeat;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .poster-masthead-name {
+      font-family: var(--font-headline);
+      font-size: 40pt;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 2mm;
+    }
+    .poster-masthead-meta {
+      font-family: var(--font-ui);
+      font-size: 6.5pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    /* ── HEADLINES LIST ────────────────────────────────────────── */
+    .headlines-list {
+      flex: 1;
+      overflow: hidden;
+      display: grid;
+      margin-top: 4mm;
+    }
+
+    .headline-sep {
+      background: var(--color-rule);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .headline-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .item-headline {
+      font-family: var(--font-headline);
+      font-size: var(--item-headline-size);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+    }
+
+    .item-byline {
+      font-family: var(--font-ui);
+      font-size: 9pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-top: 2.5mm;
+    }
+
+    /* ── QR / CTA STRIP ────────────────────────────────────────── */
+    .poster-cta {
+      flex-shrink: 0;
+      margin-top: 3.5mm;
+      padding: 3mm 4mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      background: var(--color-sidebar);
+      border-top: 1px solid var(--color-rule);
+      border-bottom: 1px solid var(--color-rule);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .poster-cta-text { flex: 1; }
+    .poster-cta-label {
+      font-family: var(--font-ui);
+      font-size: 8pt;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 1mm;
+    }
+    .poster-cta-name {
+      font-family: var(--font-headline);
+      font-size: 16pt;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      line-height: 1;
+      margin-bottom: 1mm;
+    }
+    .poster-cta-url {
+      font-family: var(--font-ui);
+      font-size: 8pt;
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+    }
+    #posterQr {
+      flex-shrink: 0;
+      width: 21mm;
+      height: 21mm;
+      display: block;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .poster-footer {
+      flex-shrink: 0;
+      margin-top: 2.5mm;
+      padding-top: 2mm;
+      border-top: 1px solid var(--color-rule);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-ui);
+      font-size: 6.5pt;
+      color: var(--color-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SCREEN UI ─────────────────────────────────────────────── */
+    .poster-ui {
+      width: 297mm;
+      margin: 1.5rem auto 0.6rem;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: #333;
+    }
+
+    .ui-url-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .ui-url-row label { font-weight: 600; white-space: nowrap; font-size: 0.75rem; }
+    .ui-url-row input {
+      flex: 1;
+      padding: 0.32em 0.6em;
+      font-family: inherit;
+      font-size: inherit;
+      border: 1px solid #aaa;
+      background: #fff;
+    }
+
+    .article-rows { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.45rem; }
+
+    .article-row { display: flex; gap: 0.35rem; align-items: center; }
+    .article-row input[type="text"] {
+      flex: 1;
+      padding: 0.32em 0.55em;
+      font-family: inherit;
+      font-size: inherit;
+      border: 1px solid #aaa;
+      background: #fff;
+      min-width: 0;
+    }
+    .article-row .btn-remove {
+      padding: 0.32em 0.6em;
+      font-family: inherit;
+      font-size: inherit;
+      background: #fff;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      color: #888;
+      flex-shrink: 0;
+    }
+    .article-row .btn-remove:hover { background: #fee; color: #8B0000; border-color: #8B0000; }
+
+    .ui-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+    .ui-controls button {
+      padding: 0.38em 1em;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 600;
+      background: #1A1A1A;
+      color: #FFFDF7;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .ui-controls button:hover { background: #8B0000; }
+    .ui-controls button.btn-secondary {
+      background: #fff;
+      color: #1A1A1A;
+      border: 1px solid #aaa;
+      font-weight: 400;
+    }
+    .ui-controls button.btn-secondary:hover { background: #f5f0e8; color: #8B0000; border-color: #8B0000; }
+    .ui-sep { width: 1px; height: 1.2em; background: #bbb; }
+
+    .poster-error {
+      width: 297mm;
+      margin: 0 auto 0.6rem;
+      padding: 0.55rem 1rem;
+      background: #fff5f5;
+      border-left: 4px solid #8B0000;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: #8B0000;
+      display: none;
+    }
+
+    /* ── PRINT ─────────────────────────────────────────────────── */
+    @media print {
+      html, body { background: white; margin: 0; padding: 0; }
+      .poster-ui, .poster-error { display: none !important; }
+      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; }
+      @page { size: A3 portrait; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poster-ui">
+    <div class="ui-url-row">
+      <label for="websiteUrl">Website URL for QR</label>
+      <input type="text" id="websiteUrl" value="sdu-deadline.dk">
+    </div>
+    <div class="article-rows" id="articleRows"></div>
+    <div class="ui-controls">
+      <button class="btn-secondary" onclick="addRow()">+ Add Article</button>
+      <button onclick="loadHeadlines()">Load</button>
+      <div class="ui-sep"></div>
+      <button onclick="window.print()">Print / Save PDF</button>
+    </div>
+  </div>
+  <div class="poster-error" id="posterError"></div>
+
+  <div class="poster" id="poster">
+    <header class="poster-masthead">
+      <div class="poster-masthead-rule"></div>
+      <p class="poster-masthead-name">Deadline</p>
+      <p class="poster-masthead-meta" id="posterMeta">The Independent Voice of SDU Students</p>
+    </header>
+
+    <div class="headlines-list" id="headlinesList">
+      <div class="headline-item" style="color:var(--color-muted);font-family:var(--font-ui);font-size:9pt;">
+        Add articles above and click Load.
+      </div>
+    </div>
+
+    <div class="poster-cta">
+      <div class="poster-cta-text">
+        <p class="poster-cta-label">Read all articles from SDU Sønderborg</p>
+        <p class="poster-cta-name">Deadline</p>
+        <p class="poster-cta-url" id="posterCtaUrl">sdu-deadline.dk</p>
+      </div>
+      <canvas id="posterQr"></canvas>
+    </div>
+
+    <footer class="poster-footer">
+      <span>Deadline &mdash; The Independent Voice of SDU Students</span>
+      <span id="posterFooterMeta"></span>
+    </footer>
+  </div>
+
+  <script>
+    var loadedArticles = null;
+    var rowCounter = 0;
+
+    (async function init() {
+      try {
+        var res = await fetch('index.html');
+        if (res.ok) {
+          var match = (await res.text()).match(/data-edition="([^"]+)"/);
+          if (match) {
+            var ed = await (await fetch(match[1])).json();
+            document.getElementById('posterMeta').textContent =
+              'Vol. ' + ed.volume + ', No. ' + ed.number + ' · ' + ed.date + ' · ' + ed.institution;
+            document.getElementById('posterFooterMeta').textContent =
+              'Vol. ' + ed.volume + ', No. ' + ed.number + ' · ' + ed.date;
+          }
+        }
+      } catch (e) {}
+      updateQR();
+      addRow();
+      addRow();
+    })();
+
+    function addRow(path) {
+      var id = ++rowCounter;
+      var row = document.createElement('div');
+      row.className = 'article-row';
+      row.id = 'row-' + id;
+      row.innerHTML =
+        '<input type="text" placeholder="Article path…"' +
+          (path ? ' value="' + escapeAttr(path) + '"' : '') + '>' +
+        '<button class="btn-remove" onclick="removeRow(\'row-' + id + '\')">&#215;</button>';
+      document.getElementById('articleRows').appendChild(row);
+    }
+
+    function removeRow(id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    async function loadHeadlines() {
+      var errorEl = document.getElementById('posterError');
+      errorEl.style.display = 'none';
+
+      var rows = document.querySelectorAll('.article-row');
+      var articles = [];
+
+      for (var i = 0; i < rows.length; i++) {
+        var path = rows[i].querySelector('input').value.trim();
+        if (!path) continue;
+        try {
+          var res = await fetch(path);
+          if (!res.ok) throw new Error('Could not load ' + path + ' (HTTP ' + res.status + ')');
+          var tmp = document.createElement('div');
+          tmp.innerHTML = (await res.text()).trim();
+          var headline = tmp.querySelector('.article-headline');
+          var byline   = tmp.querySelector('.article-byline');
+          articles.push({
+            headline: headline ? headline.textContent.trim() : '(No headline found)',
+            byline:   byline   ? byline.textContent.trim()   : ''
+          });
+        } catch (e) {
+          errorEl.textContent = e.message + '. Run a local server: python -m http.server 8000';
+          errorEl.style.display = 'block';
+          return;
+        }
+      }
+
+      if (!articles.length) {
+        errorEl.textContent = 'No article paths entered.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      loadedArticles = articles;
+      renderList(articles);
+      updateQR();
+    }
+
+    function makeSep() {
+      var s = document.createElement('div');
+      s.className = 'headline-sep';
+      return s;
+    }
+
+    function renderList(articles) {
+      var list = document.getElementById('headlinesList');
+      list.innerHTML = '';
+
+      // Build explicit grid rows: 2px sep, 1fr item, 2px sep, 1fr item, … 2px sep
+      var rows = [];
+      articles.forEach(function() { rows.push('2px', '1fr'); });
+      rows.push('2px');
+      list.style.gridTemplateRows = rows.join(' ');
+
+      articles.forEach(function(art) {
+        list.appendChild(makeSep());
+        var item = document.createElement('div');
+        item.className = 'headline-item';
+        item.innerHTML =
+          '<p class="item-headline">' + escapeHTML(art.headline) + '</p>' +
+          (art.byline ? '<p class="item-byline">' + escapeHTML(art.byline) + '</p>' : '');
+        list.appendChild(item);
+      });
+      list.appendChild(makeSep());
+    }
+
+    function updateQR() {
+      var raw    = document.getElementById('websiteUrl').value.trim() || 'sdu-deadline.dk';
+      var urlEl  = document.getElementById('posterCtaUrl');
+      var canvas = document.getElementById('posterQr');
+      if (urlEl) urlEl.textContent = raw;
+      if (!canvas) return;
+      var href = raw.startsWith('http') ? raw : 'https://' + raw;
+      QRCode.toCanvas(canvas, href, {
+        width: 120, margin: 1,
+        color: { dark: '#1A1A1A', light: '#F5F0E8' }
+      }, function() {});
+    }
+
+    function escapeHTML(str) {
+      var d = document.createElement('div');
+      d.appendChild(document.createTextNode(str));
+      return d.innerHTML;
+    }
+
+    function escapeAttr(str) {
+      return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
+    document.getElementById('websiteUrl').addEventListener('change', updateQR);
+  </script>
+
+</body>
+</html>
