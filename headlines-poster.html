@@ -331,13 +331,28 @@
       addRow();
     })();
 
+    function resolveArticlePath(input) {
+      input = input.trim();
+      if (!input) return null;
+      if (!input.includes('://') && !input.startsWith('deadline-sdu.dk')) return input;
+      try {
+        var url = new URL(input.startsWith('http') ? input : 'https://' + input);
+        var edition = url.searchParams.get('edition') || 'vol-1-no-1';
+        var slug = url.hash.slice(1);
+        if (!slug) return null;
+        return 'editions/' + edition + '/articles/' + slug + '.html';
+      } catch (e) {
+        return input;
+      }
+    }
+
     function addRow(path) {
       var id = ++rowCounter;
       var row = document.createElement('div');
       row.className = 'article-row';
       row.id = 'row-' + id;
       row.innerHTML =
-        '<input type="text" placeholder="Article path…"' +
+        '<input type="text" placeholder="https://deadline-sdu.dk/?edition=vol-1-no-1#article-name"' +
           (path ? ' value="' + escapeAttr(path) + '"' : '') + '>' +
         '<button class="btn-remove" onclick="removeRow(\'row-' + id + '\')">&#215;</button>';
       document.getElementById('articleRows').appendChild(row);
@@ -356,7 +371,7 @@
       var articles = [];
 
       for (var i = 0; i < rows.length; i++) {
-        var path = rows[i].querySelector('input').value.trim();
+        var path = resolveArticlePath(rows[i].querySelector('input').value);
         if (!path) continue;
         try {
           var res = await fetch(path);
@@ -370,7 +385,7 @@
             byline:   byline   ? byline.textContent.trim()   : ''
           });
         } catch (e) {
-          errorEl.textContent = e.message + '. Run a local server: python -m http.server 8000';
+          errorEl.textContent = e.message;
           errorEl.style.display = 'block';
           return;
         }
