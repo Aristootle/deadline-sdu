@@ -17,7 +17,7 @@
     if (!res.ok) throw new Error('HTTP ' + res.status);
     edition = await res.json();
   } catch (err) {
-    main.innerHTML = '<p class="edition-error">Could not load edition. Make sure you are running a local server (python -m http.server 8000).</p>';
+    main.innerHTML = '<p class="edition-error">Could not load edition.</p>';
     return;
   }
 
