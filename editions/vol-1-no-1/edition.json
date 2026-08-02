@@ -3,7 +3,8 @@
   "number": 1,
   "date": "August 2026",
   "institution": "University of Southern Denmark, Sønderborg",
-  "lead": "cafeen-expansion.html", 
+  "lead": "cafeen-expansion.html",
+  "leadTabLabel": "Caféen expansion",
   "sections": [
     {
       "id": "campus",

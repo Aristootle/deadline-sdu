@@ -111,11 +111,19 @@
   tabBar.className = 'edition-tabs';
   var panels = [];
 
+  var pageWrapper = document.querySelector('.page-wrapper');
+
+  function setSidebarVisibility(tabId) {
+    if (!pageWrapper) return;
+    var isLead = tabId === 'lead';
+    pageWrapper.classList.toggle('no-sidebar', isLead);
+  }
+
   // Front Page tab (lead article)
   if (leadEl) {
     var leadBtn = document.createElement('button');
     leadBtn.className = 'tab-btn active';
-    leadBtn.textContent = 'Front Page';
+    leadBtn.textContent = edition.leadTabLabel || leadTitle;
     leadBtn.dataset.tab = 'lead';
     tabBar.appendChild(leadBtn);
 
@@ -199,6 +207,7 @@
     btn.classList.add('active');
     panels.forEach(function (p) { p.classList.toggle('active', p.dataset.tab === tabId); });
     window.scrollTo({ top: 0 });
+    setSidebarVisibility(tabId);
     refreshSidebar(tabId);
   });
 
@@ -209,6 +218,7 @@
 
   // Populate sidebar for the initial tab
   var firstTabId = leadFile ? 'lead' : (sectionItems[0] ? sectionItems[0].section.id : '');
+  setSidebarVisibility(firstTabId);
   refreshSidebar(firstTabId);
 
   // Signal sidebar to initialise scroll-spy
