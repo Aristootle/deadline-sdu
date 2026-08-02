@@ -265,10 +265,14 @@
 
     /* ── PRINT ─────────────────────────────────────────────────── */
     @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
       html, body { background: white; margin: 0; padding: 0; }
       .poster-ui, .poster-error { display: none !important; }
-      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; break-after: page; }
-      .poster-cols { column-rule-color: #1A1A1A; }
+      .poster { width: 297mm; height: 420mm; margin: 0; box-shadow: none; break-after: page; background: white !important; }
+      .poster-cols { column-rule-color: var(--color-rule); }
       .article-byline, .poster-footer, .poster-masthead { border-color: #1A1A1A; }
       .pull-quote { border-top-color: #1A1A1A; border-bottom-color: #1A1A1A; }
       @page { size: A3 portrait; margin: 0; }

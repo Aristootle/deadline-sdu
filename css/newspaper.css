@@ -95,6 +95,11 @@
   margin-bottom: 0.5rem;
 }
 
+.tab-panel[data-tab="lead"] .article--long .article-headline {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  margin-bottom: 0.65rem;
+}
+
 .article--long .article-body {
   column-count: 2;
   column-gap: 2rem;

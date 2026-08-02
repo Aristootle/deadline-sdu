@@ -183,6 +183,10 @@
   align-items: start;
 }
 
+.page-wrapper > * {
+  min-width: 0;
+}
+
 .page-wrapper.no-sidebar {
   grid-template-columns: 1fr;
 }

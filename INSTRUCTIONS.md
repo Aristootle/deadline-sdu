@@ -3,19 +3,21 @@
 ## Folder structure
 
 ```
-website/
+deadline-sdu/               ← repo root
   editions/
     vol-1-no-1/
       edition.json          ← edition manifest (metadata + article list)
       articles/
         article-slug.html   ← one file per article
-  js/
-    edition-loader.js       ← renders the front page (do not edit per edition)
-    masthead.js             ← updates header on all inner pages (do not edit per edition)
+  css/                      ← shared stylesheets (do not edit per edition)
+  js/                       ← shared scripts (do not edit per edition)
   index.html                ← front page — only change data-edition when publishing
   past-editions.html        ← archive page — add a card when archiving an edition
   about.html                ← staff list
   contact.html              ← contact details
+  join.html                 ← recruitment page
+  newsletter.html           ← newsletter sign-up page
+  poster.html               ← print-to-A3 tool
 ```
 
 ---
@@ -82,6 +84,7 @@ Controls what appears on the front page and in what order.
   "date": "August 2026",
   "institution": "University of Southern Denmark, Sønderborg",
   "lead": "my-lead-article.html",
+  "leadTabLabel": "Short Tab Title",
   "sections": [
     {
       "id": "campus",
@@ -97,9 +100,42 @@ Controls what appears on the front page and in what order.
 }
 ```
 
-- `lead` — the main feature article, displayed at the top of the page.
-- `sections` — each section gets a labelled divider. Articles appear in the order listed.
+- `lead` — the main feature article, shown on the Front Page tab without a sidebar.
+- `leadTabLabel` — short title shown on the Front Page tab button (keep it brief, e.g. the article headline or a punchy version of it). Falls back to the full article headline if omitted.
+- `sections` — each section gets its own tab with a labelled divider and a sidebar listing its articles. Articles appear in the order listed.
 - Add a new section by adding a new object to the `sections` array with a unique `id`.
+
+### Section layouts
+
+By default articles in a section stack vertically. Two additional layouts are available:
+
+**Side-by-side pair (`doubles`):**
+```json
+{ "layout": "doubles", "articles": ["left-article.html", "right-article.html"] }
+```
+
+**Grouped articles within a section:**
+```json
+{
+  "id": "campus",
+  "label": "Campus",
+  "groups": [
+    { "articles": ["full-width-article.html"] },
+    { "layout": "doubles", "articles": ["left.html", "right.html"] },
+    { "articles": ["another-full-width.html"] }
+  ]
+}
+```
+Use `groups` instead of `articles` when you want to mix full-width and side-by-side articles in the same section.
+
+---
+
+## Front page tabs
+
+The front page is divided into tabs:
+
+- **Lead tab** — displays the lead article full-width with no sidebar. Its tab label is set by `leadTabLabel` in `edition.json`.
+- **Section tabs** — each section defined in `edition.json` gets a tab. Clicking a section tab shows the "In This Section" sidebar with links to each article.
 
 ---
 
@@ -120,12 +156,11 @@ Change the `data-edition` attribute on the `<main>` element to point to the new 
 ```html
 <main id="edition-main" data-edition="editions/vol-X-no-X/edition.json">
 ```
-This is the **only** change needed to `index.html`. The masthead on all pages updates automatically.
+This is the **only** change needed to `index.html`.
 
 ### 3. Update `past-editions.html`
-- **Archive the old edition:** uncomment the template block at the bottom of the editions grid and fill in the volume/number, lead headline, date, and the `edition.json` path.
-- **Add a new blank template** for the next future past edition (copy the commented block and leave it commented).
-- Update the **current edition card** at the top of the grid with the new volume, headline, and date.
+- **Archive the old edition:** uncomment the template block at the bottom of the editions grid and fill in the volume/number, lead headline, date, and the `href` pointing to `index.html?edition=editions/vol-X-no-X/edition.json`.
+- **Update the current edition card** at the top of the grid with the new volume, headline, and date. Its link should simply be `index.html`.
 
 ### 4. Check `about.html`
 Update the editorial team if any staff have changed.
@@ -139,8 +174,8 @@ Update if the editor-in-chief or any contact details have changed.
 
 Once `index.html`'s `data-edition` is updated, these update on their own:
 
-- The masthead (Vol. X, No. X / Month Year) on every page
-- The full front page layout, article order, and sidebar
+- The masthead (Vol. X, No. X / Month Year) on every page — including About, Contact, Newsletter, and Join
+- The full front page layout, article order, and tab structure
 - The page title on the front page
 
 ---
@@ -152,7 +187,7 @@ Once `index.html`'s `data-edition` is updated, these update on their own:
 ### How to use it
 
 1. Start the local server (see below) — the poster tool needs it for the same reason as the main site.
-2. Open `http://localhost:8000/poster.html` in a browser.
+2. Open `http://localhost:7900/poster.html` in a browser.
 3. In the path field, type the article path, e.g.:
    ```
    editions/vol-1-no-1/articles/dorms-website.html
@@ -168,7 +203,7 @@ The poster automatically pulls the edition metadata (volume, number, date) from 
 You can share or bookmark a URL that pre-loads a specific article:
 
 ```
-http://localhost:8000/poster.html?article=editions/vol-1-no-1/articles/dorms-website.html
+http://localhost:7900/poster.html?article=editions/vol-1-no-1/articles/dorms-website.html
 ```
 
 ### Print settings
@@ -182,11 +217,11 @@ In the browser print dialog:
 
 ## Running the site locally
 
-The site requires a local server (it fetches JSON files via `fetch()`).
+The site requires a local server (it fetches JSON and HTML files via `fetch()`).
 
 ```
-cd website
-python -m http.server 8000
+cd deadline-sdu
+python -m http.server 7900
 ```
 
-Then open `http://localhost:8000` in a browser. Opening `index.html` directly as a file will not work.
+Then open `http://localhost:7900` in a browser. Opening `index.html` directly as a file will not work.
