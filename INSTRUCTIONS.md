@@ -196,7 +196,7 @@ Once `index.html`'s `data-edition` is updated, these update on their own:
 5. Choose **1**, **2**, or **3** columns using the selector.
 6. Click **Print / Save PDF** and select A3 paper with no additional margins.
 
-The poster automatically pulls the edition metadata (volume, number, date) from the current edition. Each poster includes a QR code linking to `sdu-deadline.dk` at the end of the last column.
+The poster automatically pulls the edition metadata (volume, number, date) from the current edition. Each poster includes a QR code linking to `deadline-sdu.dk` at the end of the last column.
 
 ### Linking directly to an article
 

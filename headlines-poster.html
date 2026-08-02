@@ -268,7 +268,7 @@
   <div class="poster-ui">
     <div class="ui-url-row">
       <label for="websiteUrl">Website URL for QR</label>
-      <input type="text" id="websiteUrl" value="sdu-deadline.dk">
+      <input type="text" id="websiteUrl" value="deadline-sdu.dk">
     </div>
     <div class="article-rows" id="articleRows"></div>
     <div class="ui-controls">
@@ -297,7 +297,7 @@
       <div class="poster-cta-text">
         <p class="poster-cta-label">Read all articles from SDU Sønderborg</p>
         <p class="poster-cta-name">Deadline</p>
-        <p class="poster-cta-url" id="posterCtaUrl">sdu-deadline.dk</p>
+        <p class="poster-cta-url" id="posterCtaUrl">deadline-sdu.dk</p>
       </div>
       <canvas id="posterQr"></canvas>
     </div>
@@ -416,7 +416,7 @@
     }
 
     function updateQR() {
-      var raw    = document.getElementById('websiteUrl').value.trim() || 'sdu-deadline.dk';
+      var raw    = document.getElementById('websiteUrl').value.trim() || 'deadline-sdu.dk';
       var urlEl  = document.getElementById('posterCtaUrl');
       var canvas = document.getElementById('posterQr');
       if (urlEl) urlEl.textContent = raw;

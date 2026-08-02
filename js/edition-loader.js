@@ -3,7 +3,12 @@
   if (!main) return;
 
   var params = new URLSearchParams(window.location.search);
-  var editionPath = params.get('edition') || main.dataset.edition;
+  var editionParam = params.get('edition') || main.dataset.edition;
+  // Accept short form "vol-1-no-1" or full path "editions/vol-1-no-1/edition.json"
+  var editionPath = editionParam.indexOf('/') !== -1
+    ? editionParam
+    : 'editions/' + editionParam + '/edition.json';
+  var editionId = editionPath.replace(/^editions\//, '').replace(/\/edition\.json$/, '');
   var basePath = editionPath.slice(0, editionPath.lastIndexOf('/') + 1);
 
   var edition;
@@ -115,8 +120,25 @@
 
   function setSidebarVisibility(tabId) {
     if (!pageWrapper) return;
-    var isLead = tabId === 'lead';
-    pageWrapper.classList.toggle('no-sidebar', isLead);
+    pageWrapper.classList.toggle('no-sidebar', tabId === 'lead');
+  }
+
+  // Activate a tab and update the URL
+  function activateTab(tabId, pushHistory) {
+    tabBar.querySelectorAll('.tab-btn').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.tab === tabId);
+    });
+    panels.forEach(function (p) {
+      p.classList.toggle('active', p.dataset.tab === tabId);
+    });
+    setSidebarVisibility(tabId);
+    refreshSidebar(tabId);
+    var url = '?edition=' + editionId + '#' + tabId;
+    if (pushHistory) {
+      history.pushState({ tab: tabId }, '', url);
+    } else {
+      history.replaceState({ tab: tabId }, '', url);
+    }
   }
 
   // Front Page tab (lead article)
@@ -202,13 +224,8 @@
   tabBar.addEventListener('click', function (e) {
     var btn = e.target.closest('.tab-btn');
     if (!btn) return;
-    var tabId = btn.dataset.tab;
-    tabBar.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    panels.forEach(function (p) { p.classList.toggle('active', p.dataset.tab === tabId); });
+    activateTab(btn.dataset.tab, true);
     window.scrollTo({ top: 0 });
-    setSidebarVisibility(tabId);
-    refreshSidebar(tabId);
   });
 
   // Render
@@ -216,23 +233,76 @@
   main.appendChild(tabBar);
   panels.forEach(function (p) { main.appendChild(p); });
 
-  // Populate sidebar for the initial tab
+  // Expose editionId so sidebar.js can update the URL hash during scroll-spy
+  main.dataset.editionId = editionId;
+
+  // Resolve initial tab and scroll target from URL hash
   var firstTabId = leadFile ? 'lead' : (sectionItems[0] ? sectionItems[0].section.id : '');
-  setSidebarVisibility(firstTabId);
-  refreshSidebar(firstTabId);
+  var initSlug = window.location.hash.slice(1);
+  var initTabId = firstTabId;
+  var scrollTarget = null;
+
+  if (initSlug) {
+    // Check if the hash is a tab ID
+    var isTab = false;
+    for (var i = 0; i < panels.length; i++) {
+      if (panels[i].dataset.tab === initSlug) { isTab = true; break; }
+    }
+    if (isTab) {
+      initTabId = initSlug;
+    } else {
+      // Check if it's an article ID — find its containing panel
+      var articleEl = document.getElementById(initSlug);
+      if (articleEl) {
+        var parentPanel = articleEl.closest('.tab-panel');
+        if (parentPanel) initTabId = parentPanel.dataset.tab;
+        scrollTarget = articleEl;
+      }
+    }
+  }
+
+  // Activate the initial tab (no history push — this is the landing state)
+  tabBar.querySelectorAll('.tab-btn').forEach(function (b) {
+    b.classList.toggle('active', b.dataset.tab === initTabId);
+  });
+  panels.forEach(function (p) {
+    p.classList.toggle('active', p.dataset.tab === initTabId);
+  });
+  setSidebarVisibility(initTabId);
+  refreshSidebar(initTabId);
+
+  // Normalise the URL: always include ?edition= and a hash
+  history.replaceState(
+    { tab: initTabId },
+    '',
+    '?edition=' + editionId + '#' + (initSlug || initTabId)
+  );
+
+  // Scroll to article if one was specified in the hash
+  if (scrollTarget) {
+    setTimeout(function () {
+      scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
 
   // Signal sidebar to initialise scroll-spy
   document.dispatchEvent(new CustomEvent('edition-loaded'));
 
-  // Honour article permalink: ?edition=...#article-slug scrolls to that article
-  if (window.location.hash) {
-    var target = document.getElementById(window.location.hash.slice(1));
-    if (target) {
-      setTimeout(function () {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 80);
+  // Handle browser back / forward
+  window.addEventListener('popstate', function (e) {
+    var state = e.state;
+    if (state && state.tab) {
+      tabBar.querySelectorAll('.tab-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.tab === state.tab);
+      });
+      panels.forEach(function (p) {
+        p.classList.toggle('active', p.dataset.tab === state.tab);
+      });
+      setSidebarVisibility(state.tab);
+      refreshSidebar(state.tab);
+      window.scrollTo({ top: 0 });
     }
-  }
+  });
 })();
 
 async function fetchFragment(basePath, file) {
