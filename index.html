@@ -44,31 +44,50 @@
   </header>
   <hr class="header-rule" aria-hidden="true">
 
-  <!-- Main layout: sidebar + tabs + dynamically loaded edition content -->
-  <div class="page-wrapper">
+  <!-- Coming soon — remove this section and restore the page-wrapper block on August 28th -->
+  <main class="coming-soon-wrapper" aria-label="Coming soon">
+    <p class="coming-soon-label">Vol. 1, No. 1</p>
+    <h2 class="coming-soon-headline">First Edition Out&nbsp;28&nbsp;August</h2>
+    <p class="coming-soon-body">Deadline is SDU S&#248;nderborg&#8217;s new independent student newspaper. Our first edition covers housing, curriculum changes, campus life, and more &mdash; written entirely by students.</p>
+    <p class="coming-soon-body">Subscribe below and we&#8217;ll send it straight to your inbox the moment it drops.</p>
+    <a class="btn-subscribe coming-soon-cta" href="newsletter.html">Get the First Edition</a>
+  </main>
 
-    <aside class="article-sidebar" aria-label="In this section">
-      <h3>In This Section</h3>
-      <ul>
-        <!-- Updated by edition-loader.js on each tab switch -->
-      </ul>
-    </aside>
-
-    <!--
-      data-edition points to the current edition manifest.
-      To display a different edition, either change this attribute
-      or navigate to index.html?edition=editions/vol-0-no-1/edition.json
-    -->
-    <main id="edition-main" data-edition="editions/vol-1-no-1/edition.json">
-      <p class="edition-loading">Loading edition&hellip;</p>
-    </main>
-
-  </div>
-
-  <div class="subscribe-strip">
-    <p>Stay informed &mdash; get each new edition delivered to your inbox.</p>
-    <a class="btn-subscribe" href="https://pointerpointer.com/" target="_blank" rel="noopener">Subscribe to the Newsletter</a>
-  </div>
+  <style>
+    .coming-soon-wrapper {
+      max-width: 640px;
+      margin: 4rem auto 5rem;
+      padding: 0 var(--gutter);
+      text-align: center;
+    }
+    .coming-soon-label {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 1rem;
+    }
+    .coming-soon-headline {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 6vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--color-text);
+      margin-bottom: 1.75rem;
+    }
+    .coming-soon-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text);
+      margin-bottom: 1rem;
+    }
+    .coming-soon-cta {
+      display: inline-block;
+      margin-top: 1.5rem;
+    }
+  </style>
 
   <footer class="site-footer">
     <p>&copy; 2026 Deadline &mdash; The Independent Voice of SDU Students</p>
@@ -80,7 +99,5 @@
   </footer>
 
   <script src="js/menu.js"></script>
-  <script src="js/edition-loader.js"></script>
-  <script src="js/sidebar.js"></script>
 </body>
 </html>
