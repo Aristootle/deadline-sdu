@@ -7,28 +7,18 @@
   "leadTabLabel": "Caféen expansion",
   "sections": [
     {
-      "id": "campus",
-      "label": "Campus",
+      "id": "university",
+      "label": "University",
       "groups": [
+        { "articles": ["metrics-students.html"] },
         { "articles": ["curriculum-changes.html"] },
-        { "layout": "doubles", "articles": ["building-renovation.html", "metrics-students.html"] },
         { "articles": ["coordinator-frank.html"] }
       ]
     },
     {
-      "id": "student-organisations",
-      "label": "Student Organisations",
-      "articles": ["fem-dispensers.html","sport-clubs.html", "upcoming-events.html"]
-    },
-    {
-      "id": "science",
-      "label": "Science & Innovation",
-      "articles": ["dorms-website.html", "startup-innofounder.html"]
-    },
-    {
-      "id": "beyond-sdu",
-      "label": "Beyond SDU",
-      "articles": ["denmark-news.html", "danish-words.html"]
+      "id": "student-life",
+      "label": "Student Life",
+      "articles": ["fem-dispensers.html", "upcoming-events.html", "intro-tour-cancelled.html", "dorms-website.html"]
     }
   ]
 }

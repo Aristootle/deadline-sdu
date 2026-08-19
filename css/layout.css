@@ -520,6 +520,10 @@
     padding-top: 1.75rem;
   }
 
+  .hamburger-btn {
+    top: 3.5rem;
+  }
+
   .article-sidebar {
     display: none;
   }
