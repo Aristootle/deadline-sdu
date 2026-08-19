@@ -9,16 +9,12 @@
     {
       "id": "university",
       "label": "University",
-      "groups": [
-        { "articles": ["metrics-students.html"] },
-        { "articles": ["curriculum-changes.html"] },
-        { "articles": ["coordinator-frank.html"] }
-      ]
+      "articles": ["curriculum-changes.html", "metrics-students.html", "coordinator-frank.html"] 
     },
     {
       "id": "student-life",
       "label": "Student Life",
-      "articles": ["fem-dispensers.html", "upcoming-events.html", "intro-tour-cancelled.html", "dorms-website.html"]
+      "articles": ["intro-tour-cancelled.html", "dorms-website.html", "fem-dispensers.html", "upcoming-events.html"]
     }
   ]
 }
