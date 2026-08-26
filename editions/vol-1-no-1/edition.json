@@ -9,12 +9,12 @@
     {
       "id": "university",
       "label": "University",
-      "articles": ["curriculum-changes.html", "metrics-students.html", "coordinator-frank.html"] 
+      "articles": ["curriculum-changes.html", "coordinator-frank.html", "metrics-students.html", "mechatronics.html"] 
     },
     {
       "id": "student-life",
       "label": "Student Life",
-      "articles": ["intro-tour-cancelled.html", "dorms-website.html", "fem-dispensers.html", "upcoming-events.html"]
+      "articles": ["intro-tour-cancelled.html", "fem-dispensers.html", "dorms-website.html"]
     }
   ]
 }

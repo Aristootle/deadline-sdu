@@ -396,11 +396,18 @@
         if (headline) {
           var leadWrap = document.createElement('div');
           leadWrap.className = 'poster-lead-image';
-          var node = article.firstChild;
-          while (node && node !== headline) {
-            leadWrap.appendChild(node.cloneNode(true));
-            node = node.nextSibling;
+
+          var leadImage = article.querySelector('.img-placeholder, img');
+          if (leadImage) {
+            leadWrap.appendChild(leadImage.cloneNode(true));
+          } else {
+            var node = article.firstChild;
+            while (node && node !== headline) {
+              leadWrap.appendChild(node.cloneNode(true));
+              node = node.nextSibling;
+            }
           }
+
           if (leadWrap.children.length) colsEl.appendChild(leadWrap);
         }
 

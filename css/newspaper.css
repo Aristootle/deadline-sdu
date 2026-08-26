@@ -113,17 +113,16 @@
   column-count: 1;
 }
 
-.article--middle .article-headline {
+.article--middle .article-headline,
+.article--short .article-headline,
+.article--secondary .article-headline,
+.article--brief .article-headline {
   font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+  font-weight: 700;
 }
 
 .article--middle .article-body {
   column-count: 1;
-}
-
-.article--short .article-headline {
-  font-size: 1.05rem;
-  font-weight: 700;
 }
 
 .article--short .article-body {
