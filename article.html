@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — Deadline</title>
+  <title>Deadline</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/newspaper.css">
 </head>
 <body>
 
@@ -51,55 +51,35 @@
   <nav class="category-nav" aria-label="Topics">
     <div class="category-nav-inner">
       <a href="index.html">Home</a>
-      <a href="category.html?cat=university">University</a>
-      <a href="category.html?cat=student-life">Student Life</a>
-      <a href="category.html?cat=student-organisations">Student Organisations</a>
+      <a href="category.html?cat=university" id="nav-university">University</a>
+      <a href="category.html?cat=student-life" id="nav-student-life">Student Life</a>
+      <a href="category.html?cat=student-organisations" id="nav-student-organisations">Student Organisations</a>
       <a href="search.html" class="category-nav-search">Search</a>
     </div>
   </nav>
 
-  <main class="inner-page">
-
-    <div class="page-hero">
-      <span class="section-label">Contact</span>
-      <h1>Get in Touch</h1>
-      <p>Story tips, letters to the editor, corrections, or general enquiries &#8212; we read everything.</p>
-    </div>
-
-    <div class="contact-info">
-      <p class="contact-info-heading">Editorial Contact</p>
-      <dl>
-        <div class="contact-info-item">
-          <dt>General enquiries</dt>
-          <dd><a href="mailto:deadline@sdu.dk">deadline@sdu.dk</a></dd>
-        </div>
-        <div class="contact-info-item">
-          <dt>Editor-in-Chief</dt>
-          <dd><a href="mailto:arkal22@student.sdu.dk">Ariana Kalsbeek</a></dd>
-        </div>
-        <div class="contact-info-item">
-          <dt>Instagram</dt>
-          <dd><a href="#" target="_blank" rel="noopener">@deadlinesdu</a></dd>
-        </div>
-        <div class="contact-info-item">
-          <dt>Facebook</dt>
-          <dd><a href="#" target="_blank" rel="noopener">Deadline SDU</a></dd>
-        </div>
-      </dl>
-    </div>
-
+  <main class="article-page-wrapper">
+    <a class="article-back-link" href="index.html">Home</a>
+    <div id="article-content"></div>
+    <div id="related-articles" class="related-articles"></div>
   </main>
+
+  <div class="subscribe-strip">
+    <p>Stay up to date &mdash; get each new article in your inbox.</p>
+    <a class="btn-subscribe" href="newsletter.html">Subscribe to Deadline</a>
+  </div>
 
   <footer class="site-footer">
     <p>&copy; 2026 Deadline &mdash; The Independent Voice of SDU Students</p>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="newsletter.html">Subscribe</a>
       <a href="join.html">Join our Team</a>
-      <a href="contact.html">Contact</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </footer>
 
   <script src="js/menu.js"></script>
+  <script src="js/article-loader.js"></script>
 </body>
 </html>

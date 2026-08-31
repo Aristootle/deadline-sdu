@@ -282,7 +282,7 @@
 <body>
 
   <div class="poster-ui">
-    <input type="text" id="articleInput" placeholder="https://deadline-sdu.dk/?edition=vol-1-no-1#dorms-website  or  editions/vol-1-no-1/articles/dorms-website.html">
+    <input type="text" id="articleInput" placeholder="https://deadline-sdu.dk/article.html?slug=2026-08-28-dorms-website  or  articles/2026-08-28-dorms-website.html">
     <button onclick="loadArticle()">Load</button>
     <div class="ui-sep"></div>
     <label>Columns
@@ -324,21 +324,6 @@
 
   <script>
     (async function init() {
-      try {
-        var indexRes = await fetch('index.html');
-        if (indexRes.ok) {
-          var match = (await indexRes.text()).match(/data-edition="([^"]+)"/);
-          if (match) {
-            var ed = await (await fetch(match[1])).json();
-            document.getElementById('posterMeta').textContent =
-              'Vol. ' + ed.volume + ', No. ' + ed.number +
-              ' · ' + ed.date + ' · ' + ed.institution;
-            document.getElementById('posterFooterMeta').textContent =
-              'Vol. ' + ed.volume + ', No. ' + ed.number + ' · ' + ed.date;
-          }
-        }
-      } catch (e) {}
-
       updateQR();
 
       var params = new URLSearchParams(window.location.search);
@@ -352,14 +337,13 @@
     function resolveArticlePath(input) {
       input = input.trim();
       if (!input) return null;
-      // Already a plain relative path — use as-is
+      // Plain relative path — use as-is
       if (!input.includes('://') && !input.startsWith('deadline-sdu.dk')) return input;
       try {
         var url = new URL(input.startsWith('http') ? input : 'https://' + input);
-        var edition = url.searchParams.get('edition') || 'vol-1-no-1';
-        var slug = url.hash.slice(1);
+        var slug = url.searchParams.get('slug');
         if (!slug) return null;
-        return 'editions/' + edition + '/articles/' + slug + '.html';
+        return 'articles/' + slug + '.html';
       } catch (e) {
         return input;
       }
@@ -375,8 +359,13 @@
         var res = await fetch(path);
         if (!res.ok) throw new Error('Could not load article (HTTP ' + res.status + ')');
 
+        var rawHtml = (await res.text()).trim();
+        // Fix image paths: fragments reference images relative to articles/ folder
+        rawHtml = rawHtml
+          .replace(/src="images\//g, 'src="articles/images/')
+          .replace(/url\('images\//g, "url('articles/images/");
         var tmp = document.createElement('div');
-        tmp.innerHTML = (await res.text()).trim();
+        tmp.innerHTML = rawHtml;
         var article = tmp.firstElementChild || tmp;
 
         var headerEl = document.getElementById('posterHeader');
@@ -389,7 +378,23 @@
         var byline   = article.querySelector('.article-byline');
         var body     = article.querySelector('.article-body');
 
+        // Lead image: first img-placeholder or img that is NOT inside the article body
+        var leadImg = null;
+        var imgCandidates = article.querySelectorAll('.img-placeholder, img');
+        for (var i = 0; i < imgCandidates.length; i++) {
+          if (!body || !body.contains(imgCandidates[i])) { leadImg = imgCandidates[i]; break; }
+        }
+
         if (headline) headerEl.appendChild(headline.cloneNode(true));
+        if (leadImg) {
+          var imgWrap = document.createElement('div');
+          imgWrap.className = 'poster-lead-image';
+          imgWrap.appendChild(leadImg.cloneNode(true));
+          // Include adjacent caption if present
+          var cap = leadImg.nextElementSibling;
+          if (cap && cap.classList.contains('img-caption')) imgWrap.appendChild(cap.cloneNode(true));
+          headerEl.appendChild(imgWrap);
+        }
         if (byline)   headerEl.appendChild(byline.cloneNode(true));
         document.getElementById('posterBylineSep').style.display = byline ? '' : 'none';
 

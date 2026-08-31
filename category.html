@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category — Deadline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/newspaper.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <button class="hamburger-btn" id="menuToggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">&#215;</button>
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+          <ul class="menu-subnav">
+            <li><a href="category.html?cat=university">University</a></li>
+            <li><a href="category.html?cat=student-life">Student Life</a></li>
+            <li><a href="category.html?cat=student-organisations">Student Organisations</a></li>
+          </ul>
+        </li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="newsletter.html">Newsletter</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="join.html">Join Our Team</a></li>
+      </ul>
+    </nav>
+    <p class="menu-overlay-meta">Deadline &nbsp;&middot;&nbsp; SDU S&#248;nderborg &nbsp;&middot;&nbsp; Est. 2026</p>
+  </div>
+
+  <header class="site-header">
+    <p class="masthead-meta">Independent Student News &nbsp;&middot;&nbsp; SDU S&#248;nderborg</p>
+    <h1 class="masthead-title">Deadline</h1>
+    <p class="masthead-tagline">The Independent Voice of SDU Students</p>
+  </header>
+  <hr class="header-rule" aria-hidden="true">
+
+  <nav class="category-nav" aria-label="Topics" id="category-nav">
+    <div class="category-nav-inner">
+      <a href="index.html">Home</a>
+      <a href="category.html?cat=university" id="nav-university">University</a>
+      <a href="category.html?cat=student-life" id="nav-student-life">Student Life</a>
+      <a href="category.html?cat=student-organisations" id="nav-student-organisations">Student Organisations</a>
+      <a href="search.html" class="category-nav-search">Search</a>
+    </div>
+  </nav>
+
+  <main class="category-page-wrapper">
+    <div class="page-hero" id="category-hero">
+      <span class="section-label" id="category-label">Category</span>
+      <h1 id="category-title">Articles</h1>
+      <p id="category-count"></p>
+    </div>
+    <div id="category-results">
+      <p class="edition-loading">Loading articles&hellip;</p>
+    </div>
+  </main>
+
+  <div class="subscribe-strip">
+    <p>Stay up to date &mdash; get each new article in your inbox.</p>
+    <a class="btn-subscribe" href="newsletter.html">Subscribe to Deadline</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Deadline &mdash; The Independent Voice of SDU Students</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="newsletter.html">Subscribe</a>
+      <a href="join.html">Join our Team</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </footer>
+
+  <script src="js/menu.js"></script>
+  <script>
+    (async function () {
+      const params = new URLSearchParams(location.search);
+      const catId = params.get('cat') || '';
+
+      let data;
+      try {
+        const res = await fetch('articles.json');
+        if (!res.ok) throw new Error('fetch failed');
+        data = await res.json();
+      } catch (e) {
+        document.getElementById('category-results').innerHTML =
+          '<p class="edition-error">Could not load articles. Make sure you are running a local server.</p>';
+        return;
+      }
+
+      const { articles, categories } = data;
+      const cat = categories.find(c => c.id === catId);
+      const catLabel = cat ? cat.label : catId;
+
+      // Update page title and meta
+      document.title = catLabel + ' — Deadline';
+      document.getElementById('category-label').textContent = catLabel;
+      document.getElementById('category-title').textContent = catLabel;
+
+      // Mark active nav link
+      const navLink = document.getElementById('nav-' + catId);
+      if (navLink) navLink.classList.add('active');
+
+      // Filter + sort articles newest first
+      const filtered = articles
+        .filter(a => a.category === catId)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const countEl = document.getElementById('category-count');
+      countEl.textContent = filtered.length + (filtered.length === 1 ? ' article' : ' articles');
+
+      const container = document.getElementById('category-results');
+
+      if (!filtered.length) {
+        container.innerHTML = '<p class="edition-loading">No articles found in this category.</p>';
+        return;
+      }
+
+      container.innerHTML = '<div class="article-card-grid">' +
+        filtered.map(function (a) {
+          var imgHtml = a.image
+            ? '<div class="article-card-image" style="background-image: url(\'' + a.image + '\')"></div>'
+            : '';
+          return '<a class="article-card" href="article.html?slug=' + a.slug + '">' +
+            imgHtml +
+            '<div class="article-card-body">' +
+            '<p class="article-card-headline">' + esc(a.title) + '</p>' +
+            '<p class="article-card-summary">' + esc(a.summary) + '</p>' +
+            '<p class="article-card-meta">' + (a.author ? esc(a.author) + ' &middot; ' : '') + fmtDate(a.date) + '</p>' +
+            '</div>' +
+            '</a>';
+        }).join('') +
+        '</div>';
+
+      function fmtDate(dateStr) {
+        if (!dateStr) return '';
+        var d = new Date(dateStr + 'T00:00:00');
+        return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      function esc(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+    })();
+  </script>
+</body>
+</html>

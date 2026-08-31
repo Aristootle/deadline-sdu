@@ -24,8 +24,15 @@
     <button class="menu-close" id="menuClose" aria-label="Close menu">&#215;</button>
     <nav>
       <ul>
-        <li><a href="index.html">Current Edition</a></li>
-        <li><a href="past-editions.html">Past Editions</a></li>
+        <li>
+          <a href="index.html">Home</a>
+          <ul class="menu-subnav">
+            <li><a href="category.html?cat=university">University</a></li>
+            <li><a href="category.html?cat=student-life">Student Life</a></li>
+            <li><a href="category.html?cat=student-organisations">Student Organisations</a></li>
+          </ul>
+        </li>
+        <li><a href="search.html">Search</a></li>
         <li><a href="newsletter.html">Newsletter</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="join.html">Join Our Team</a></li>
@@ -35,17 +42,21 @@
   </div>
 
   <header class="site-header">
-    <p class="masthead-meta">
-      Vol. 1, No. 1
-      <span>|</span>
-      July 2026
-      <span>|</span>
-      University of Southern Denmark, S&#248;nderborg
-    </p>
+    <p class="masthead-meta">Independent Student News &nbsp;&middot;&nbsp; SDU S&#248;nderborg</p>
     <h1 class="masthead-title">Deadline</h1>
     <p class="masthead-tagline">The Independent Voice of SDU Students</p>
   </header>
   <hr class="header-rule" aria-hidden="true">
+
+  <nav class="category-nav" aria-label="Topics">
+    <div class="category-nav-inner">
+      <a href="index.html">Home</a>
+      <a href="category.html?cat=university">University</a>
+      <a href="category.html?cat=student-life">Student Life</a>
+      <a href="category.html?cat=student-organisations">Student Organisations</a>
+      <a href="search.html" class="category-nav-search">Search</a>
+    </div>
+  </nav>
 
   <main class="inner-page">
 
@@ -70,10 +81,10 @@
       <a href="newsletter.html">Subscribe</a>
       <a href="join.html">Join our Team</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </footer>
 
   <script src="js/menu.js"></script>
-  <script src="js/masthead.js"></script>
 </body>
 </html>

@@ -26,8 +26,15 @@
     <button class="menu-close" id="menuClose" aria-label="Close menu">&#215;</button>
     <nav>
       <ul>
-        <li><a href="index.html">Current Edition</a></li>
-        <li><a href="past-editions.html">Past Editions</a></li>
+        <li>
+          <a href="index.html">Home</a>
+          <ul class="menu-subnav">
+            <li><a href="category.html?cat=university">University</a></li>
+            <li><a href="category.html?cat=student-life">Student Life</a></li>
+            <li><a href="category.html?cat=student-organisations">Student Organisations</a></li>
+          </ul>
+        </li>
+        <li><a href="search.html">Search</a></li>
         <li><a href="newsletter.html">Newsletter</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="join.html">Join Our Team</a></li>
@@ -36,58 +43,34 @@
     <p class="menu-overlay-meta">Deadline &nbsp;&middot;&nbsp; SDU S&#248;nderborg &nbsp;&middot;&nbsp; Est. 2026</p>
   </div>
 
-  <!-- Masthead — content updated by edition-loader.js -->
+  <!-- Masthead -->
   <header class="site-header">
-    <p class="masthead-meta">&nbsp;</p>
+    <p class="masthead-meta">Independent Student News &nbsp;&middot;&nbsp; SDU S&#248;nderborg</p>
     <h1 class="masthead-title">Deadline</h1>
     <p class="masthead-tagline">The Independent Voice of SDU Students</p>
   </header>
   <hr class="header-rule" aria-hidden="true">
 
-  <!-- Coming soon — remove this section and restore the page-wrapper block on August 28th -->
-  <main class="coming-soon-wrapper" aria-label="Coming soon">
-    <p class="coming-soon-label">Vol. 1, No. 1</p>
-    <h2 class="coming-soon-headline">First Edition Out&nbsp;28&nbsp;August</h2>
-    <p class="coming-soon-body">Deadline is SDU S&#248;nderborg&#8217;s new independent student newspaper. Our first edition covers housing, curriculum changes, campus life, and more &mdash; written entirely by students.</p>
-    <p class="coming-soon-body">Subscribe below and we&#8217;ll send it straight to your inbox the moment it drops.</p>
-    <a class="btn-subscribe coming-soon-cta" href="newsletter.html">Get the First Edition</a>
+  <!-- Category navigation -->
+  <nav class="category-nav" aria-label="Topics">
+    <div class="category-nav-inner">
+      <a href="index.html" class="active">Home</a>
+      <a href="category.html?cat=university">University</a>
+      <a href="category.html?cat=student-life">Student Life</a>
+      <a href="category.html?cat=student-organisations">Student Organisations</a>
+      <a href="search.html" class="category-nav-search">Search</a>
+    </div>
+  </nav>
+
+  <!-- Front page content — populated by front-page.js -->
+  <main id="front-main" aria-label="Latest articles">
+    <p class="edition-loading" style="padding: 3rem var(--gutter);">Loading articles&hellip;</p>
   </main>
 
-  <style>
-    .coming-soon-wrapper {
-      max-width: 640px;
-      margin: 4rem auto 5rem;
-      padding: 0 var(--gutter);
-      text-align: center;
-    }
-    .coming-soon-label {
-      font-family: var(--font-ui);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-muted);
-      margin-bottom: 1rem;
-    }
-    .coming-soon-headline {
-      font-family: var(--font-headline);
-      font-size: clamp(2rem, 6vw, 3.25rem);
-      font-weight: 700;
-      line-height: 1.15;
-      color: var(--color-text);
-      margin-bottom: 1.75rem;
-    }
-    .coming-soon-body {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--color-text);
-      margin-bottom: 1rem;
-    }
-    .coming-soon-cta {
-      display: inline-block;
-      margin-top: 1.5rem;
-    }
-  </style>
+  <div class="subscribe-strip">
+    <p>Stay up to date &mdash; get each new article in your inbox.</p>
+    <a class="btn-subscribe" href="newsletter.html">Subscribe to Deadline</a>
+  </div>
 
   <footer class="site-footer">
     <p>&copy; 2026 Deadline &mdash; The Independent Voice of SDU Students</p>
@@ -95,9 +78,11 @@
       <a href="newsletter.html">Subscribe</a>
       <a href="join.html">Join our Team</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </footer>
 
   <script src="js/menu.js"></script>
+  <script src="js/front-page.js"></script>
 </body>
 </html>

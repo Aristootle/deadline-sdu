@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARTICLE TITLE — Deadline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/newspaper.css">
+</head>
+<body>
+
+  <button class="hamburger-btn" id="menuToggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">&#215;</button>
+    <nav>
+      <ul>
+        <li>
+          <a href="../index.html">Home</a>
+          <ul class="menu-subnav">
+            <li><a href="../category.html?cat=university">University</a></li>
+            <li><a href="../category.html?cat=student-life">Student Life</a></li>
+            <li><a href="../category.html?cat=student-organisations">Student Organisations</a></li>
+          </ul>
+        </li>
+        <li><a href="../search.html">Search</a></li>
+        <li><a href="../newsletter.html">Newsletter</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../join.html">Join Our Team</a></li>
+      </ul>
+    </nav>
+    <p class="menu-overlay-meta">Deadline &nbsp;&middot;&nbsp; SDU S&#248;nderborg &nbsp;&middot;&nbsp; Est. 2026</p>
+  </div>
+
+  <header class="site-header">
+    <p class="masthead-meta">Independent Student News &nbsp;&middot;&nbsp; SDU S&#248;nderborg</p>
+    <h1 class="masthead-title">Deadline</h1>
+    <p class="masthead-tagline">The Independent Voice of SDU Students</p>
+  </header>
+  <hr class="header-rule" aria-hidden="true">
+
+  <!--
+    Category nav: set class="active" on the correct link.
+    Categories: university | student-life
+  -->
+  <nav class="category-nav" aria-label="Topics">
+    <div class="category-nav-inner">
+      <a href="../index.html">Home</a>
+      <a href="../category.html?cat=university">University</a>
+      <a href="../category.html?cat=student-life">Student Life</a>
+      <a href="../category.html?cat=student-organisations">Student Organisations</a>
+      <a href="../search.html" class="category-nav-search">Search</a>
+    </div>
+  </nav>
+
+  <main class="article-page-wrapper">
+    <!--
+      Back link href and text are updated automatically by article.js.
+      Set the href and text to the correct category as a fallback.
+    -->
+    <a class="article-back-link" href="../index.html">Home</a>
+
+    <!--
+      Replace this comment with the article content.
+      Use one of the size classes: article--long | article--middle | article--short
+
+      article--long   800–1200 words — 2-col body, drop cap, image + pull quote recommended
+      article--middle 400–800  words — 1-col body, drop cap, image optional
+      article--short  100–400  words — 1-col body, no drop cap, no image
+    -->
+    <article class="article article--long">
+      <h2 class="article-headline">Article Headline Goes Here</h2>
+      <!--
+        Optional hero image:
+        <div class="img-placeholder" style="--ratio: 52%; background-image: url('../editions/.../images/photo.jpg'); background-size: cover; background-position: center;" role="img" aria-label="Image description"></div>
+        <p class="img-caption">Caption. Photo: Author Name</p>
+      -->
+      <p class="article-byline">By Author Name <span>&middot;</span> DD Month YYYY</p>
+      <div class="article-body">
+        <p>First paragraph. The drop cap is applied automatically to the first letter of the first paragraph.</p>
+        <p>Second paragraph.</p>
+        <!--
+          Pull quote example:
+          <blockquote class="pull-quote">
+            <p>"Quote text."</p>
+            <cite>— Speaker Name, Title</cite>
+          </blockquote>
+        -->
+      </div>
+    </article>
+
+    <!-- Related articles are injected here by article.js -->
+    <div id="related-articles" class="related-articles"></div>
+  </main>
+
+  <div class="subscribe-strip">
+    <p>Stay up to date &mdash; get each new article in your inbox.</p>
+    <a class="btn-subscribe" href="../newsletter.html">Subscribe to Deadline</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Deadline &mdash; The Independent Voice of SDU Students</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="../newsletter.html">Subscribe</a>
+      <a href="../join.html">Join our Team</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </footer>
+
+  <script src="../js/menu.js"></script>
+  <script src="../js/article.js"></script>
+</body>
+</html>

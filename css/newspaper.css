@@ -355,6 +355,16 @@
   clear: both;
 }
 
+.article-footnote {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-rule);
+}
+
 /* === BRIEF / SINGLE-COL OVERRIDES === */
 
 .article--single .article-body {
