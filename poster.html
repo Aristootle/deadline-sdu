@@ -393,17 +393,6 @@
         if (byline)   headerEl.appendChild(byline.cloneNode(true));
         document.getElementById('posterBylineSep').style.display = byline ? '' : 'none';
 
-        if (headline) {
-          var leadWrap = document.createElement('div');
-          leadWrap.className = 'poster-lead-image';
-          var node = article.firstChild;
-          while (node && node !== headline) {
-            leadWrap.appendChild(node.cloneNode(true));
-            node = node.nextSibling;
-          }
-          if (leadWrap.children.length) colsEl.appendChild(leadWrap);
-        }
-
         if (body) colsEl.innerHTML += body.innerHTML;
 
         // Append CTA as last element so column balancing accounts for its height

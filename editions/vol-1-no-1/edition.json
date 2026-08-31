@@ -9,16 +9,12 @@
     {
       "id": "university",
       "label": "University",
-      "groups": [
-        { "articles": ["metrics-students.html"] },
-        { "articles": ["curriculum-changes.html"] },
-        { "articles": ["coordinator-frank.html"] }
-      ]
+      "articles": ["curriculum-changes.html", "coordinator-frank.html", "metrics-students.html", "mechatronics.html"] 
     },
     {
       "id": "student-life",
       "label": "Student Life",
-      "articles": ["fem-dispensers.html", "upcoming-events.html", "intro-tour-cancelled.html", "dorms-website.html"]
+      "articles": ["intro-tour-cancelled.html", "photo-competition.html", "fem-dispensers.html", "dorms-website.html", "shopping-in-sonderborg.html"]
     }
   ]
 }
