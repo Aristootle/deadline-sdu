@@ -136,7 +136,7 @@ Categories are defined at the top of `articles.json`:
 "categories": [
   { "id": "university",            "label": "University" },
   { "id": "student-life",         "label": "Student Life" },
-  { "id": "student-organisations","label": "Student Organisations" }
+  { "id": "outside-sdu","label": "Outside of SDU" }
 ]
 ```
 

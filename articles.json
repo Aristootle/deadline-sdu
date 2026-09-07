@@ -2,7 +2,7 @@
   "categories": [
     { "id": "university", "label": "University" },
     { "id": "student-life", "label": "Student Life" },
-    { "id": "student-organisations", "label": "Student Organisations" }
+    { "id": "outside-sdu", "label": "Outside of SDU" }
   ],
   "articles": [
     {
@@ -68,7 +68,7 @@
     {
       "slug": "2026-08-28-photo-competition",
       "title": "Deadline Is Holding a Photo Competition",
-      "category": "student-organisations",
+      "category": "outside-sdu",
       "date": "2026-08-28",
       "author": null,
       "summary": "We're hosting a photo competition on the theme of Sønderborg. Submit your photos and vote for your favourite before the 21st of September.",
@@ -78,7 +78,7 @@
     {
       "slug": "2026-08-28-fem-dispensers",
       "title": "FEM Installs Menstrual Product Dispensers Across Campus Bathrooms",
-      "category": "student-organisations",
+      "category": "university",
       "date": "2026-08-28",
       "author": "News Desk",
       "summary": "After a period of inactivity, student organisation FEM has relaunched and installed three free menstrual product dispensers in bathrooms across campus.",
@@ -88,22 +88,32 @@
     {
       "slug": "2026-08-28-dorms-website",
       "title": "Student Launches Website Listing Every Student Housing Option in Sønderborg",
-      "category": "student-life",
+      "category": "outside-sdu",
       "date": "2026-08-28",
       "author": "Ariana Kalsbeek",
       "summary": "Electronics Engineering student Andrea Bortolotti built studenthousingsonderborg.app — a platform covering every dorm, with vacancies, pricing, and commute times.",
       "image": "articles/images/studenthousing_map.png",
-      "featured": true
+      "featured": false
     },
     {
       "slug": "2026-08-28-shopping-in-sonderborg",
       "title": "Shopping in Sønderborg",
-      "category": "student-life",
+      "category": "outside-sdu",
       "date": "2026-08-28",
       "author": "Sellei Máté",
       "summary": "A guide to shopping in Sønderborg for new and returning students — convenience stores, second-hand shops, online options, and walking times from the dorms.",
       "image": null,
       "featured": false
+    },
+    {
+      "slug": "2026-09-07-boardgames-collab",
+      "title": "Four Student Organisations Create a Day of Games, Crafting and Dance",
+      "category": "student-life",
+      "date": "2026-09-07",
+      "author": "Ariana Kalsbeek",
+      "summary": "SDU Boardgames, Tengoku, D&D League and The Yarn Society brought students together for an afternoon of games, crafting, tea and dancing at Alsion.",
+      "image": "articles/images/20260906_boardgames.jpg",
+      "featured": true
     }
   ]
 }
