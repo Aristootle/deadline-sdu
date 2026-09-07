@@ -3,49 +3,58 @@
 ## Folder structure
 
 ```
-deadline-sdu/               ← repo root
-  editions/
-    vol-1-no-1/
-      edition.json          ← edition manifest (metadata + article list)
-      articles/
-        article-slug.html   ← one file per article
-  css/                      ← shared stylesheets (do not edit per edition)
-  js/                       ← shared scripts (do not edit per edition)
-  index.html                ← front page — only change data-edition when publishing
-  past-editions.html        ← archive page — add a card when archiving an edition
-  about.html                ← staff list
-  contact.html              ← contact details
-  join.html                 ← recruitment page
-  newsletter.html           ← newsletter sign-up page
-  poster.html               ← print-to-A3 tool
+deadline-sdu/
+  articles/               ← one HTML fragment per article
+    images/               ← article images
+    2026-08-28-slug.html  ← article content fragment (no boilerplate)
+  articles.json           ← master content index (all articles + categories)
+  article.html            ← shared page shell (header, nav, footer for all articles)
+  css/                    ← shared stylesheets (do not edit per article)
+  js/                     ← shared scripts
+  index.html              ← front page (built dynamically from articles.json)
+  category.html           ← category listing page
+  search.html             ← search page
+  about.html              ← about / staff list
+  contact.html            ← contact details
+  join.html               ← recruitment page
+  newsletter.html         ← newsletter sign-up
+  poster.html             ← print-to-A3 single-article poster tool
+  headlines-poster.html   ← print-to-A3 multi-headline poster tool
 ```
+
+---
+
+## How pages work
+
+- **`article.html`** is the single shared shell that renders every article. It contains the masthead, navigation, footer, and menu — edit this one file to change the layout for all articles.
+- **`articles/2026-08-28-slug.html`** files contain only the `<article>` element — no `<html>`, `<head>`, or `<body>` tags, no nav, no footer. `article.html` fetches the correct fragment based on the `?slug=` URL parameter and injects it into the page.
+- **`articles.json`** drives the front page, category pages, and search. Every article must be registered here.
 
 ---
 
 ## Writing a new article
 
-1. Create an HTML fragment file in the edition's `articles/` folder, e.g. `articles/my-article.html`.
-2. Use one of these templates depending on article length:
+### 1. Create the article fragment
 
-**Short article (2 paragraphs):**
+Add a file to `articles/` named `YYYY-MM-DD-slug.html` (e.g. `2026-09-12-new-cafe.html`).
+
+The file contains **only** the `<article>` element — nothing else:
+
 ```html
-<article class="article article--short">
+<article class="article article--long">
   <h2 class="article-headline">Your Headline Here</h2>
-  <p class="article-byline">By Author Name, Role <span>&middot;</span> Vol. X, No. X</p>
+  <p class="article-byline">By Author Name <span>&middot;</span> 12 September 2026</p>
   <div class="article-body">
-    <p>Body text...</p>
     <p>Body text...</p>
   </div>
 </article>
 ```
 
-**Medium article (3–4 paragraphs):** same as above but `article--middle`.
+Use `article--short` (2 paragraphs), `article--middle` (3–4 paragraphs), or `article--long` (5+ paragraphs).
 
-**Long article (5+ paragraphs):** same as above but `article--long`.
+### Optional elements inside `article-body`
 
-**Optional elements inside `article-body`:**
-
-Pull quote:
+**Pull quote:**
 ```html
 <blockquote class="pull-quote">
   <p>&#8220;Quote text.&#8221;</p>
@@ -53,175 +62,136 @@ Pull quote:
 </blockquote>
 ```
 
-Inline image (full width):
+**Full-width image:**
 ```html
-<div class="img-inline">
-  <div class="img-placeholder" style="--ratio: 66.66%;" role="img" aria-label="Description"></div>
-  <p class="img-caption">Caption text. Photo: Photographer / Deadline</p>
-</div>
+<div class="img-placeholder" style="--ratio: 56.25%; background-image: url('images/your-image.jpg'); background-size: cover; background-position: center;" role="img" aria-label="Description"></div>
+<p class="img-caption">Caption. Photo: Photographer</p>
 ```
 
-Side image (floated right):
+**Inline image (inside body columns):**
 ```html
-<div class="img-side img-side--right" style="width: 140px;">
-  <div class="img-placeholder" style="--ratio: 120%;" role="img" aria-label="Description"></div>
+<div class="img-inline">
+  <img src="images/your-image.jpg" alt="Description" style="width: 100%; display: block;">
   <p class="img-caption">Caption.</p>
 </div>
 ```
 
-3. Register the article in `edition.json` (see below).
-
----
-
-## The edition manifest (`edition.json`)
-
-Controls what appears on the front page and in what order.
-
-```json
-{
-  "volume": 1,
-  "number": 1,
-  "date": "August 2026",
-  "institution": "University of Southern Denmark, Sønderborg",
-  "lead": "my-lead-article.html",
-  "leadTabLabel": "Short Tab Title",
-  "sections": [
-    {
-      "id": "campus",
-      "label": "Campus",
-      "articles": ["article-one.html", "article-two.html"]
-    },
-    {
-      "id": "student-life",
-      "label": "Student Life",
-      "articles": ["article-three.html"]
-    }
-  ]
-}
-```
-
-- `lead` — the main feature article, shown on the Front Page tab without a sidebar.
-- `leadTabLabel` — short title shown on the Front Page tab button (keep it brief, e.g. the article headline or a punchy version of it). Falls back to the full article headline if omitted.
-- `sections` — each section gets its own tab with a labelled divider and a sidebar listing its articles. Articles appear in the order listed.
-- Add a new section by adding a new object to the `sections` array with a unique `id`.
-
-### Section layouts
-
-By default articles in a section stack vertically. Two additional layouts are available:
-
-**Side-by-side pair (`doubles`):**
-```json
-{ "layout": "doubles", "articles": ["left-article.html", "right-article.html"] }
-```
-
-**Grouped articles within a section:**
-```json
-{
-  "id": "campus",
-  "label": "Campus",
-  "groups": [
-    { "articles": ["full-width-article.html"] },
-    { "layout": "doubles", "articles": ["left.html", "right.html"] },
-    { "articles": ["another-full-width.html"] }
-  ]
-}
-```
-Use `groups` instead of `articles` when you want to mix full-width and side-by-side articles in the same section.
-
----
-
-## Front page tabs
-
-The front page is divided into tabs:
-
-- **Lead tab** — displays the lead article full-width with no sidebar. Its tab label is set by `leadTabLabel` in `edition.json`.
-- **Section tabs** — each section defined in `edition.json` gets a tab. Clicking a section tab shows the "In This Section" sidebar with links to each article.
-
----
-
-## Publishing a new edition — checklist
-
-### 1. Create the new edition folder
-```
-editions/vol-X-no-X/
-  edition.json
-  articles/
-    article-one.html
-    article-two.html
-    ...
-```
-
-### 2. Update `index.html`
-Change the `data-edition` attribute on the `<main>` element to point to the new edition:
+**Side image (floated right):**
 ```html
-<main id="edition-main" data-edition="editions/vol-X-no-X/edition.json">
+<div class="img-side img-side--right" style="width: 140px;">
+  <img src="images/your-image.jpg" alt="Description" style="width: 100%; display: block;">
+  <p class="img-caption">Caption.</p>
+</div>
 ```
-This is the **only** change needed to `index.html`.
 
-### 3. Update `past-editions.html`
-- **Archive the old edition:** uncomment the template block at the bottom of the editions grid and fill in the volume/number, lead headline, date, and the `href` pointing to `index.html?edition=editions/vol-X-no-X/edition.json`.
-- **Update the current edition card** at the top of the grid with the new volume, headline, and date. Its link should simply be `index.html`.
+> Image paths in fragments are relative to the `articles/` folder, e.g. `images/photo.jpg`.
 
-### 4. Check `about.html`
-Update the editorial team if any staff have changed.
+### 2. Add images
 
-### 5. Check `contact.html`
-Update if the editor-in-chief or any contact details have changed.
+Place any images in `articles/images/`.
+
+### 3. Register the article in `articles.json`
+
+Add an entry to the `articles` array:
+
+```json
+{
+  "slug": "2026-09-12-new-cafe",
+  "title": "New Café Opens on Campus",
+  "category": "student-life",
+  "date": "2026-09-12",
+  "author": "Jane Smith",
+  "summary": "A one-sentence summary shown in article cards.",
+  "image": "articles/images/new-cafe.jpg",
+  "featured": false
+}
+```
+
+| Field | Required | Notes |
+|---|---|---|
+| `slug` | ✓ | Must match the filename without `.html` |
+| `title` | ✓ | Full article headline |
+| `category` | ✓ | Must match an `id` in the `categories` array |
+| `date` | ✓ | `YYYY-MM-DD` format |
+| `author` | | Shown in cards and related articles |
+| `summary` | | One sentence shown in cards |
+| `image` | | Path from site root to a card thumbnail. Use `null` if no image. |
+| `featured` | | Set `true` on one article to feature it at the top of the front page |
+
+### 4. The article is live
+
+The article is immediately accessible at:
+```
+http://localhost:7900/article.html?slug=2026-09-12-new-cafe
+```
+It will also appear in category pages and search automatically.
 
 ---
 
-## What updates automatically
+## Categories
 
-Once `index.html`'s `data-edition` is updated, these update on their own:
+Categories are defined at the top of `articles.json`:
 
-- The masthead (Vol. X, No. X / Month Year) on every page — including About, Contact, Newsletter, and Join
-- The full front page layout, article order, and tab structure
-- The page title on the front page
+```json
+"categories": [
+  { "id": "university",            "label": "University" },
+  { "id": "student-life",         "label": "Student Life" },
+  { "id": "student-organisations","label": "Student Organisations" }
+]
+```
+
+To add a new category: add an entry here, then also add it to the navigation in `article.html`, `index.html`, `category.html`, `search.html`, `about.html`, `contact.html`, `join.html`, and `newsletter.html`.
 
 ---
 
-## Printing an article as an A3 poster
+## Updating the shared shell (`article.html`)
 
-`poster.html` lets you turn any article into a print-ready A3 poster to put up around campus.
+Edit `article.html` to change anything that appears on every article page: masthead text, navigation links, subscribe strip, footer links. This file is fetched once and shared across all articles — you never need to touch individual article fragments for layout changes.
 
-### How to use it
+---
 
-1. Start the local server (see below) — the poster tool needs it for the same reason as the main site.
-2. Open `http://localhost:7900/poster.html` in a browser.
-3. In the path field, type the article path, e.g.:
+## Printing posters
+
+### Single-article poster (`poster.html`)
+
+Turns any article into a print-ready A3 poster.
+
+1. Start the local server (see below).
+2. Open `http://localhost:7900/poster.html`.
+3. Paste the article URL or path into the field:
    ```
-   editions/vol-1-no-1/articles/dorms-website.html
+   https://deadline-sdu.dk/article.html?slug=2026-08-28-dorms-website
    ```
-4. Click **Load** (or press Enter).
-5. Choose **1**, **2**, or **3** columns using the selector.
-6. Click **Print / Save PDF** and select A3 paper with no additional margins.
+   or just the relative path:
+   ```
+   articles/2026-08-28-dorms-website.html
+   ```
+4. Click **Load**.
+5. Choose 1, 2, or 3 columns.
+6. Click **Print / Save PDF** — select A3, no margins, background graphics on.
 
-The poster automatically pulls the edition metadata (volume, number, date) from the current edition. Each poster includes a QR code linking to `deadline-sdu.dk` at the end of the last column.
-
-### Linking directly to an article
-
-You can share or bookmark a URL that pre-loads a specific article:
-
+You can also link directly to a pre-loaded poster:
 ```
-http://localhost:7900/poster.html?article=editions/vol-1-no-1/articles/dorms-website.html
+http://localhost:7900/poster.html?article=articles/2026-08-28-dorms-website.html
 ```
 
-### Print settings
+### Headlines poster (`headlines-poster.html`)
 
-In the browser print dialog:
-- Paper size: **A3**
-- Margins: **None**
-- Background graphics: **on** (required for the masthead rule and CTA strip colour)
+Shows large headlines from multiple articles on one A3 sheet.
+
+1. Open `http://localhost:7900/headlines-poster.html`.
+2. Paste article URLs or paths into the rows (click **+ Add Article** for more).
+3. Click **Load**, then **Print / Save PDF**.
 
 ---
 
 ## Running the site locally
 
-The site requires a local server (it fetches JSON and HTML files via `fetch()`).
+The site requires a local server because it loads JSON and HTML files via `fetch()`.
 
 ```
 cd deadline-sdu
 python -m http.server 7900
 ```
 
-Then open `http://localhost:7900` in a browser. Opening `index.html` directly as a file will not work.
+Then open `http://localhost:7900` in your browser. Opening `index.html` directly as a file will not work.

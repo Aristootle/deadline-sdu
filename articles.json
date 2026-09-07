@@ -1,0 +1,109 @@
+{
+  "categories": [
+    { "id": "university", "label": "University" },
+    { "id": "student-life", "label": "Student Life" },
+    { "id": "student-organisations", "label": "Student Organisations" }
+  ],
+  "articles": [
+    {
+      "slug": "2026-08-28-cafeen-expansion",
+      "title": "Caféen is Being Expanded, Events Temporarily Move Outside",
+      "category": "student-life",
+      "date": "2026-08-28",
+      "author": "Ariana Kalsbeek",
+      "summary": "SDU Sønderborg's student bar is under construction for a major expansion. Events will move outside or to temporary locations while the work continues.",
+      "image": "articles/images/cafeen_landscape.JPG",
+      "featured": true
+    },
+    {
+      "slug": "2026-08-28-curriculum-changes",
+      "title": "Two New Business Masters Starting in September",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "SDU Sønderborg adds two new master's programmes this autumn — Global Supply Chain Management and Marketing, Social Media and Digitalization.",
+      "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-coordinator-frank",
+      "title": "Frank Robert Barin Joins Sønderborg as Programme Coordinator for Engineering",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "Frank Robert Barin has taken up the role of programme coordinator for Engineering, while former coordinator Christina moves into a senior advisory position.",
+      "image": "articles/images/frank_robert_barin.jpg",
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-metrics-students",
+      "title": "623 New Students Starting this Semester",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "This autumn, 623 students have been offered a place at SDU Sønderborg — 121 fewer than in 2025, a decline of around 16 percent compared to last year.",
+      "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-mechatronics",
+      "title": "A Conversation with Mechatronics Head of Programme",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "Farkas Angelus",
+      "summary": "We sat down with Andrei-Alexandru Popa, the new head of mechatronics at SDU Sønderborg, on his vision for the programme and what it means to study mechatronics.",
+      "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-intro-tour-cancelled",
+      "title": "Festival and Party Replace Intro Tour this Semester",
+      "category": "student-life",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "The annual Intro Tour has been cancelled due to a lack of funding. An Intro Party and the largest-ever Intro Festival will be held in its place.",
+      "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-photo-competition",
+      "title": "Deadline Is Holding a Photo Competition",
+      "category": "student-organisations",
+      "date": "2026-08-28",
+      "author": null,
+      "summary": "We're hosting a photo competition on the theme of Sønderborg. Submit your photos and vote for your favourite before the 21st of September.",
+      "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-fem-dispensers",
+      "title": "FEM Installs Menstrual Product Dispensers Across Campus Bathrooms",
+      "category": "student-organisations",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "After a period of inactivity, student organisation FEM has relaunched and installed three free menstrual product dispensers in bathrooms across campus.",
+      "image": "articles/images/femmenstrualproducts.png",
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-dorms-website",
+      "title": "Student Launches Website Listing Every Student Housing Option in Sønderborg",
+      "category": "student-life",
+      "date": "2026-08-28",
+      "author": "Ariana Kalsbeek",
+      "summary": "Electronics Engineering student Andrea Bortolotti built studenthousingsonderborg.app — a platform covering every dorm, with vacancies, pricing, and commute times.",
+      "image": "articles/images/studenthousing_map.png",
+      "featured": true
+    },
+    {
+      "slug": "2026-08-28-shopping-in-sonderborg",
+      "title": "Shopping in Sønderborg",
+      "category": "student-life",
+      "date": "2026-08-28",
+      "author": "Sellei Máté",
+      "summary": "A guide to shopping in Sønderborg for new and returning students — convenience stores, second-hand shops, online options, and walking times from the dorms.",
+      "image": null,
+      "featured": false
+    }
+  ]
+}
