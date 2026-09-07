@@ -32,7 +32,7 @@
   for (const cat of categories) {
     const catArticles = sorted
       .filter(a => a.category === cat.id && !featuredSlugs.has(a.slug))
-      .slice(0, 6);
+      .slice(0, 4);
     if (!catArticles.length) continue;
     html += renderSection(cat, catArticles);
   }

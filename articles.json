@@ -26,16 +26,6 @@
       "featured": false
     },
     {
-      "slug": "2026-08-28-coordinator-frank",
-      "title": "Frank Robert Barin Joins Sønderborg as Programme Coordinator for Engineering",
-      "category": "university",
-      "date": "2026-08-28",
-      "author": "News Desk",
-      "summary": "Frank Robert Barin has taken up the role of programme coordinator for Engineering, while former coordinator Christina moves into a senior advisory position.",
-      "image": "articles/images/frank_robert_barin.jpg",
-      "featured": false
-    },
-    {
       "slug": "2026-08-28-metrics-students",
       "title": "623 New Students Starting this Semester",
       "category": "university",
@@ -43,6 +33,26 @@
       "author": "News Desk",
       "summary": "This autumn, 623 students have been offered a place at SDU Sønderborg — 121 fewer than in 2025, a decline of around 16 percent compared to last year.",
       "image": null,
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-fem-dispensers",
+      "title": "FEM Installs Menstrual Product Dispensers Across Campus Bathrooms",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "After a period of inactivity, student organisation FEM has relaunched and installed three free menstrual product dispensers in bathrooms across campus.",
+      "image": "articles/images/femmenstrualproducts.png",
+      "featured": false
+    },
+    {
+      "slug": "2026-08-28-coordinator-frank",
+      "title": "Frank Robert Barin Joins Sønderborg as Programme Coordinator for Engineering",
+      "category": "university",
+      "date": "2026-08-28",
+      "author": "News Desk",
+      "summary": "Frank Robert Barin has taken up the role of programme coordinator for Engineering, while former coordinator Christina moves into a senior advisory position.",
+      "image": "articles/images/frank_robert_barin.jpg",
       "featured": false
     },
     {
@@ -68,21 +78,11 @@
     {
       "slug": "2026-08-28-photo-competition",
       "title": "Deadline Is Holding a Photo Competition",
-      "category": "outside-sdu",
+      "category": "student-life",
       "date": "2026-08-28",
       "author": null,
       "summary": "We're hosting a photo competition on the theme of Sønderborg. Submit your photos and vote for your favourite before the 21st of September.",
       "image": null,
-      "featured": false
-    },
-    {
-      "slug": "2026-08-28-fem-dispensers",
-      "title": "FEM Installs Menstrual Product Dispensers Across Campus Bathrooms",
-      "category": "university",
-      "date": "2026-08-28",
-      "author": "News Desk",
-      "summary": "After a period of inactivity, student organisation FEM has relaunched and installed three free menstrual product dispensers in bathrooms across campus.",
-      "image": "articles/images/femmenstrualproducts.png",
       "featured": false
     },
     {
