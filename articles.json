@@ -113,7 +113,7 @@
       "author": "Ariana Kalsbeek",
       "summary": "SDU Boardgames, Tengoku, D&D League and The Yarn Society brought students together for an afternoon of games, crafting, tea and dancing at Alsion.",
       "image": "articles/images/20260906_boardgames.jpg",
-      "featured": true
+      "featured": false
     },
     {
       "slug": "2026-09-16-sdu-turns-60",
@@ -123,6 +123,16 @@
       "author": "Máté Sellei",
       "summary": "SDU Sønderborg marked the university's 60th anniversary with a campus commemoration led by Rector Jens Ringsmose and attended by students, staff and community members.",
       "image": "articles/images/20260916_birthday60.jpg",
+      "featured": true
+    },
+    {
+      "slug": "2026-09-21-intro-festival",
+      "title": "Intro Festival Brings Music, Activities and Students Together Despite the Rain",
+      "category": "student-life",
+      "date": "2026-09-21",
+      "author": "Ariana Kalsbeek",
+      "summary": "Students gathered at Ringriderpladsen for the Intro Festival, where live music, activities and student organisations welcomed the new semester despite the rain.",
+      "image": "articles/images/20260919_festivalmusic.jpg",
       "featured": true
     }
   ]
